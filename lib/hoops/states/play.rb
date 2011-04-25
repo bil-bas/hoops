@@ -2,6 +2,10 @@ module Hoops
   class Play < GameState
     trait :timer
 
+    SONGS = {
+        "Simply dance - Libra.ogg" => (4 * 60) + 5,
+    }
+
     SONG_VOLUME_FULL = 0.25
     SONG_VOLUME_MUTED = 0.05
 
@@ -21,7 +25,8 @@ module Hoops
       end
 
       on_input(:escape) { pop_game_state }
-      @song = Song["song_1.ogg"]
+      @song_name = SONGS.keys.sample
+      @song = Song[@song_name]
       @song.volume = SONG_VOLUME_FULL
       @song.pause
     end
