@@ -5,8 +5,6 @@ module Hoops
     SCORE_INDENT = 10
     PET_OFFSET = 15
 
-    DEFAULT_ANIMATION_FRAMES = 0..3
-
     attr_reader :number
 
     def initialize(number, difficulty, options = {})
@@ -18,7 +16,8 @@ module Hoops
       @number = number
 
       @animations = Animation.new(file: "player#{@number + 1}_16x16.png", delay: 250)
-      @current_animation = @animations[DEFAULT_ANIMATION_FRAMES]
+      @animation_sets = [@animations[0..3], @animations[4..7], @animations[8..11]]
+      @current_animation = @animation_sets[0]
       self.image = @animations[0]
 
       @@keys_config ||= Settings.new(KEYS_CONFIG_FILE)
@@ -48,10 +47,22 @@ module Hoops
         @pet.dismiss
         @pet = nil
       end
+
+      if @multiplier > 1
+        @current_animation = @animation_sets[0]
+      end
+
       @multiplier = 1
     end
 
     def increment_multiplier
+      case @multiplier
+        when 1
+          @current_animation = @animation_sets[1]
+        when 19
+          @current_animation = @animation_sets[2]
+      end
+
       @multiplier += 1 unless @multiplier == MAX_MULTIPLIER
     end
 
