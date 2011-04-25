@@ -1,0 +1,48 @@
+h1. === An indeterminate number of hoops! ===
+
+* "Github project (Spooner/hoops)":https://github.com/Spooner/hoops
+
+h2. Description
+
+Hoops is a retro 2.5D game in which both players must dance as indicated by the rolling hula hoops.
+
+h3. User settings
+
+Hoops saves per-user-settings in the '~/.hoops_spooner' folder (This is probably 'C:\Users\<username>\.wrath\' on Windows).
+Until a proper way to edit settings is implemented, if you need to change keys, you should edit
+these YAML files manually.
+
+h3. Logs
+
+Hoops creates a log every time it runs (because it is still beta). If you have problems or crashes, it will help to include a copy of the log
+in your report :)
+
+h2. Requirements
+
+h3. Windows
+
+If running the .exe, there are no other requirements. Otherwise the requirements are the same as for Linux or OS/X.
+
+h3. OS X and Linux (or Windows from source)
+
+* Ruby 1.9.2
+** Gosu gem 0.7.27
+** Chingu gem 0.9rc4
+** Fidgit gem 0.0.5alpha
+** Texplay gem 0.3.5
+
+    gem install gosu texplay --no-ri --no-rdoc
+    gem install fidgit chingu --pre --no-ri --no-rdoc
+
+h2. Credits
+
+* SiliconEidolon for playtesting.
+
+h2. Third party assets used
+
+* Some sprites were made by Oryx (or adapted from his work) from his "LOFI Sprite Pack":http://cgbarrett.squarespace.com/sprites/. These sprites are under the "CC BY-NC-ND":http://creativecommons.org/licenses/by-nc-nd/3.0/ license.
+* Sound effects created using "bfxr":http://www.bfxr.net/
+* "Pixelated" font - created by Affinity and Epsilon
+* "Gosu":http://libgosu.org/ game development library
+* "Chingu":http://ippa.se/chingu game library
+* "Texplay":http://banisterfiend.wordpress.com/2008/08/23/texplay-an-image-manipulation-tool-for-ruby-and-gosu/ image manipulation library for Gosu.
