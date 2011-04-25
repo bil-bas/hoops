@@ -33,6 +33,10 @@ module Hoops
         super
       end
 
+      if @player
+        @player.add_score(parent.frame_time / 10.0)
+      end
+
       self.image = @current_animation.next
     end
 
@@ -61,10 +65,12 @@ module Hoops
       @command = nil
       explode(Pixel)
       self.state = :dancing
+      @player = player
       player.pet = self
     end
 
     def dismiss
+      @player = nil
       explode(Pixel)
       destroy
     end
