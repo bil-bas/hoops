@@ -1,0 +1,20 @@
+---
+:players:
+  1:
+    :left:
+      - :a
+    :right:
+      - :d
+    :up:
+      - :w
+    :down:
+      - :s
+  2:
+    :left:
+      - :left
+    :right:
+      - :right
+    :up:
+      - :up
+    :down:
+      - :down

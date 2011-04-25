@@ -1,0 +1,96 @@
+module Hoops
+  class Player < BaseObject
+    MAX_MULTIPLIER = 20
+    KEYS_CONFIG_FILE = 'keys.yml'
+    SCORE_INDENT = 10
+    PET_OFFSET = 15
+
+    DEFAULT_ANIMATION_FRAMES = 0..3
+
+    attr_reader :number
+
+    def initialize(number, difficulty, options = {})
+      options = {
+      }.merge! options
+
+      super options
+
+      @number = number
+
+      @animations = Animation.new(file: "player#{@number + 1}_16x16.png", delay: 250)
+      @current_animation = @animations[DEFAULT_ANIMATION_FRAMES]
+      self.image = @animations[0]
+
+      @@keys_config ||= Settings.new(KEYS_CONFIG_FILE)
+
+      @incoming = IncomingList.create(self, difficulty)
+
+      @score = 0
+      @multiplier = 1
+      @score_font = Font["pixelated.ttf", 40]
+      @multiplier_font = Font["pixelated.ttf", 80]
+
+      [:left, :right, :up, :down].each do |direction|
+        on_input(@@keys_config[:players, @number + 1, direction], direction)
+      end
+
+      @score_x = (@number == 1) ? $window.width - SCORE_INDENT : SCORE_INDENT
+      @score_align = (@number == 1) ? 1 : 0
+    end
+
+    def update
+      super
+      self.image = @current_animation.next
+    end
+
+    def reset_multiplier
+      if @pet
+        @pet.dismiss
+        @pet = nil
+      end
+      @multiplier = 1
+    end
+
+    def increment_multiplier
+      @multiplier += 1 unless @multiplier == MAX_MULTIPLIER
+    end
+
+    def add_score(score)
+      @score += (score * @multiplier).to_i
+    end
+
+    def draw
+      $window.scale(1.0 / $window.sprite_scale) do
+        @score_font.draw_rel(@score.to_s.rjust(7, '0'), @score_x, 4, ZOrder::GUI, @score_align, 0)
+        @multiplier_font.draw_rel("X #{@multiplier.to_s.rjust(2, ' ')}", @score_x, 26, ZOrder::GUI, @score_align, 0)
+      end
+
+      super
+    end
+
+    def up
+      @incoming.command_performed(:up)
+    end
+
+    def down
+      @incoming.command_performed(:down)
+    end
+
+    def right
+      @incoming.command_performed(:right)
+    end
+
+    def left
+      @incoming.command_performed(:left)
+    end
+
+    def pet=(pet)
+      @pet.dismiss if @pet
+
+      @pet = pet
+      @pet.x = x + ((@number == 1) ? +PET_OFFSET : -PET_OFFSET)
+      @pet.y = y
+      @pet.z = 50
+    end
+  end
+end
