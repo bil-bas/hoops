@@ -44,7 +44,7 @@ end
 class Game < Window
   include Log
 
-  SIZE = [640, 480]
+  SIZE = [768, 480]
 
   TITLE = "=== An indeterminate number of hoops ==="
   attr_reader :pixel, :sprite_scale

@@ -14,10 +14,10 @@ module Hoops
 
       pack :horizontal do
         pack :vertical, spacing: 18 do
-          heading = label "An indeterminate number of hoops!", font_size: 28, color: Color.rgb(50, 120, 255), width: $window.retro_width, justify: :center
+          heading = label "An indeterminate number of hoops!", font_size: 34, color: Color.rgb(50, 120, 255), width: $window.retro_width, justify: :center
 
-          pack :vertical, spacing: 12, padding_left: 80 do
-            options = { width: heading.width - 15 - 160, font_size: 32, justify: :center }
+          pack :vertical, spacing: 12, padding_left: 150 do
+            options = { width: heading.width - 15 - 300, font_size: 32, justify: :center }
             button("Play", options.merge(tip: 'Both players on the same keyboard')) { play }
             button("Options", options.merge(enabled: false))
             button("About", options.merge(enabled: false))
@@ -26,7 +26,7 @@ module Hoops
         end
       end
 
-     (10..70).step(10) do |x|
+     (10..90).step(12) do |x|
         SpinningHoop.create(x: x, y: 50, color: Color.rgb(rand(255), rand(255), rand(255)))
       end
     end

@@ -50,7 +50,7 @@ module Hoops
       @speed = SPEEDS[difficulty]
       if @player.number == 1
         @speed = -@speed
-        @create_x = 84
+        @create_x = $window.retro_width - 1 + 5
       else
         @create_x = -5
       end
