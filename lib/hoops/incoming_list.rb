@@ -52,9 +52,10 @@ module Hoops
       while @list.first and
             ((@speed > 0 and @list.first.x > @hit_range.max) or
             (@speed < 0 and @list.first.x < @hit_range.min))
-        @list.first.explode(Ash)
-        @list.first.contents.explode(Ash) if @list.first.contents
-        @list.first.destroy
+        command = @list.first
+        command.explode(Ash)
+        command.contents.explode(Ash) if @list.first.contents
+        command.destroy
         @list.shift
         @player.reset_multiplier
       end
@@ -73,6 +74,7 @@ module Hoops
           if @perfect_range.include? command.x
             @direction_icons[direction].perfect_hit
             @player.add_score(HIT_SCORE * @difficulty_settings[:multiplier] * PERFECT_MULTIPLIER)
+            Word.create(:perfect, x: command.x, y: command.y, z: command.z + command.height / 2)
             command.explode(Pixel) # Double explosion for a perfect.
           else
             @direction_icons[direction].hit
