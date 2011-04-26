@@ -10,13 +10,24 @@ module Hoops
     MISS_MUTE_DURATION = 500
 
     def initialize(player, name, options = {})
+      @player, @name = player, name
+
+      @default_color = Command::COLORS[name].dup
+      @default_color.red /= 4
+      @default_color.blue /= 4
+      @default_color.green /= 4
+
+      @miss_color = Command::COLORS[name].dup
+      @miss_color.red /= 2
+      @miss_color.blue /= 2
+      @miss_color.green /= 2
+
       options = {
           image: Image["direction_6x6.png"],
-          color: Color.rgb(0, 0, 0),
+          rotation_center: :center_center,
+          color: @default_color,
           zorder: ZOrder::TILES,
       }.merge! options
-
-      @player, @name = player, name
 
       super options
 
@@ -34,6 +45,7 @@ module Hoops
           self.angle = 90
           blip = 1
       end
+
       @hit_sample = Sample["blip#{blip}.ogg"]
       @miss_sample = Sample["miss.ogg"]
     end
@@ -51,9 +63,7 @@ module Hoops
     end
 
     def miss
-      color = Command::COLORS[name].dup
-      color.alpha /= 3
-      flash(color, MISS_FLASH_DURATION)
+      flash(@miss_color, MISS_FLASH_DURATION)
       parent.mute_song(MISS_MUTE_DURATION)
       @player.reset_multiplier
       @miss_sample.play
@@ -61,7 +71,24 @@ module Hoops
 
     def flash(color, duration)
       self.color = color
-      after(duration) { self.color = Color.rgb(0, 0, 0) }
+      after(duration) { self.color = @default_color }
+    end
+
+    def draw
+      if color.red > 100 or color.green > 100 or color.blue > 100
+        glow_color = color.dup
+        glow_size = 0.7
+        glow_color.alpha = case @name
+                             when :up    then 255 # Red
+                             when :down  then 75 # Cyan
+                             when :left  then 75 # Yellow
+                             when :right then 150 # Magenta
+                           end
+
+        parent.glow.draw_rot x, y, zorder, 0, 0.5, 0.5, glow_size, glow_size, glow_color, :additive
+      end
+
+      super
     end
   end
 end
