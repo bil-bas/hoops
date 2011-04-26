@@ -37,10 +37,11 @@ module Hoops
 
       on_input(:escape) { pop_game_state }
       minutes, seconds = @track[:duration].split(':').map {|t| t.to_i }
+
       @track_duration = ((minutes * 60) + seconds) * 1000.0
       @game_duration = 0
 
-      log.info { "Playing track #{@track[:file]} for #{@track[:duration]} (#{@track_duration}ms)" }
+      log.info { "Playing track '#{track[:name]}' from '#{@track[:file]}' for #{@track[:duration]} (#{@track_duration}ms)" }
 
       @song = Song[@track[:file]]
       @song.volume = SONG_VOLUME_FULL
@@ -77,8 +78,9 @@ module Hoops
     end
 
     def update
-      if @song.playing?
-        @game_duration += frame_time
+      remaining_time = @track_duration - @game_duration
+      if @song.playing? and remaining_time > 0
+        @game_duration = [@game_duration + frame_time, @track_duration].min
         super
       else
         push_game_state GameOver

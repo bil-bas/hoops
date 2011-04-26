@@ -1,9 +1,2 @@
-:tracks:
-  -
-    :file: Mentats (Edit) - Schematic Wizard.ogg
-    :duration: '3:50'
-    :enabled: true
-  -
-    :file: Simply dance - Libra.ogg
-    :duration: '4:05'
-    :enabled: true
+---
+:tracks: []

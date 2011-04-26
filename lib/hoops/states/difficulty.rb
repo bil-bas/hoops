@@ -51,14 +51,23 @@ module Hoops
              @track_choice.enabled = (not value)
           end
 
-          @tracks = Settings.new(PLAYLIST_CONFIG_FILE)[:tracks]
-          @tracks.select! {|t| t[:enabled] }
+          # The tracklist is both the ones that come with the game and any added by the user.
+          @tracks = []
+          game_tracks = Dir[File.join(EXTRACT_PATH, "media", "music", "*.ogg")]
+          game_tracks.each do |track_file|
+            track_file = File.basename track_file
+            track_file =~ /^(.*) @(\d+)_(\d+).ogg$/
+            @tracks << { name: $1, file: track_file, duration: "#{$2}:#{$3}" }
+          end
+
+          @tracks += Settings.new(PLAYLIST_CONFIG_FILE)[:tracks]
+
           selected_track_index = rand(@tracks.size)
           @track_choice = combo_box enabled: (not settings[:playlist, :random]), font_size: 24 do
 
             @tracks.each_with_index do |track, i|
-              track_name = track[:file].chomp(File.extname(track[:file])).tr('_', ' ')
-              item track_name, i
+              track_name = track[:name]
+              item "#{track_name} (#{track[:duration]})", i
               selected_track_index = i if track[:file] == settings[:playlist, :track]
             end
           end

@@ -19,7 +19,7 @@ module Hoops
           pack :vertical, spacing: 12, padding_left: 150 do
             options = { width: heading.width - 15 - 300, font_size: 32, justify: :center }
             button("Play", options.merge(tip: 'Both players on the same keyboard')) { play }
-            button("Options", options.merge(enabled: false))
+            button("Options", options) { push_game_state OptionsPlaylist }
             button("About", options.merge(enabled: false))
             button("Exit", options) { close }
           end
