@@ -1,6 +1,8 @@
 module Hoops
   # 2.5D object.
   class BaseObject < GameObject
+    SHADOW_ALPHA = 0.5
+
     attr_reader :z
     attr_writer :z
 
@@ -24,7 +26,7 @@ module Hoops
     def draw
       # Draw a shadow
       if casts_shadow?
-        color = Color.rgba(0, 0, 0, alpha)
+        color = Color.rgba(0, 0, 0, (alpha * SHADOW_ALPHA).round)
         shadow_scale = 0.5
         shadow_height = height * shadow_scale
         shadow_base = z * shadow_scale
