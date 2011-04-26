@@ -46,22 +46,24 @@ module Hoops
       pack :horizontal do
         label "Track: "
 
-        @track_random = toggle_button "Random", value: settings[:playlist, :random] do |sender, value|
-           @track_choice.enabled = (not value)
-        end
-
-        @tracks = Settings.new(PLAYLIST_CONFIG_FILE)[:tracks]
-        @tracks.select! {|t| t[:enabled] }
-        selected_track_index = rand(@tracks.size)
-        @track_choice = combo_box enabled: (not settings[:playlist, :random]), font_size: 32 do
-
-          @tracks.each_with_index do |track, i|
-            track_name = track[:file].chomp(File.extname(track[:file])).tr('_', ' ')
-            item track_name, i
-            selected_track_index = i if track[:file] == settings[:playlist, :track]
+        pack :vertical do
+          @track_random = toggle_button "Random", value: settings[:playlist, :random] do |sender, value|
+             @track_choice.enabled = (not value)
           end
+
+          @tracks = Settings.new(PLAYLIST_CONFIG_FILE)[:tracks]
+          @tracks.select! {|t| t[:enabled] }
+          selected_track_index = rand(@tracks.size)
+          @track_choice = combo_box enabled: (not settings[:playlist, :random]), font_size: 24 do
+
+            @tracks.each_with_index do |track, i|
+              track_name = track[:file].chomp(File.extname(track[:file])).tr('_', ' ')
+              item track_name, i
+              selected_track_index = i if track[:file] == settings[:playlist, :track]
+            end
+          end
+          @track_choice.value = selected_track_index
         end
-        @track_choice.value = selected_track_index
       end
     end
 
