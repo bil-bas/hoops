@@ -42,11 +42,12 @@ h2. Third party assets used
 
 h3. Songs
 
-* "'Simply dance'":http://www.jamendo.com/en/track/751875 by Libra (from 'Girlfriend Experience') [CC BY-NC-ND]
+* "'Simply dance'":http://www.jamendo.com/en/track/751875 by Libra (from 'Girlfriend Experience') ["CC BY-NC-ND":http://creativecommons.org/licenses/by-nc-nd/3.0/]
+* "'Mentats (Edit)'":http://www.jamendo.com/en/track/753730 by Schematic Wizard (from 'Schematic Wizard') ["CC BY-SA":http://creativecommons.org/licenses/by-sa/3.0/]
 
 h3. Other assets
 
-* Some sprites were made by Oryx (or adapted from his work) from his "LOFI Sprite Pack":http://cgbarrett.squarespace.com/sprites/. These sprites are under the "CC BY-NC-ND":http://creativecommons.org/licenses/by-nc-nd/3.0/ license.
+* Some sprites were made by Oryx (or adapted from his work) from his "LOFI Sprite Pack":http://cgbarrett.squarespace.com/sprites/. ["CC BY-NC-ND":http://creativecommons.org/licenses/by-nc-nd/3.0/]
 * Sound effects created using "bfxr":http://www.bfxr.net/
 * "Pixelated" font - created by Affinity and Epsilon
 * "Gosu":http://libgosu.org/ game development library
