@@ -79,7 +79,7 @@ module Hoops
             @player.add_score(HIT_SCORE * @difficulty_settings[:multiplier])
           end
 
-          @list.shift
+          @list.delete command
           command.explode(Pixel)
           command.performed(@player)
           command.destroy
