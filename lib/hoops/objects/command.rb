@@ -8,12 +8,7 @@ module Hoops
         right: 52,
     }
 
-    ANIMATIONS = {
-        up: "rolling_hoop_9x9.png",
-        down: "rolling_hoop_9x9.png",
-        left: "rolling_hoop_9x9.png",
-        right: "rolling_hoop_9x9.png",
-    }
+    ANIMATION_FILE = "rolling_hoop_9x9.png"
 
     COLORS = {
         up: Color.rgb(255, 0, 0), # Red
@@ -40,10 +35,8 @@ module Hoops
 
       self.y = Y_POSITIONS[@direction]
 
-      @animation = case @direction
-                     when :left, :right, :up, :down
-                       Animation.new(file: ANIMATIONS[@direction], delay: 250)
-                   end
+      @@animation ||= Animation.new(file: ANIMATION_FILE, delay: 250)
+      @animation = @@animation.dup
 
       self.image = @animation.frames[0]
       self.color = COLORS[@direction]
