@@ -33,11 +33,11 @@ Fidgit::Element.schema.merge_elements! YAML.load(File.read(SCHEMA_FILE))
 module Hoops
 module ZOrder
   BACKGROUND = -Float::INFINITY
-  TILES = -3
-  SHADOWS = -2
+  TILES = -4
+  SHADOWS = -3
+  SCORE = -2
   BACK_GLOW = -1
-  PLAYER = 1
-  FOREGROUND = 9999
+  # Objects are 0+
   GUI = 10000
 end
 

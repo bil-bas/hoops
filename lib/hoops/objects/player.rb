@@ -74,8 +74,8 @@ module Hoops
 
     def draw
       $window.scale(1.0 / $window.sprite_scale) do
-        @score_font.draw_rel(@score.to_s.rjust(9, '0'), @score_x, 4, ZOrder::GUI, @score_align, 0)
-        @multiplier_font.draw_rel("X #{@multiplier.to_s.rjust(2, ' ')}", @score_x, 26, ZOrder::GUI, @score_align, 0)
+        @score_font.draw_rel(@score.to_s.rjust(9, '0'), @score_x, 4, ZOrder::SCORE, @score_align, 0)
+        @multiplier_font.draw_rel("x #{@multiplier.to_s.rjust(2, '0')}", @score_x, 26, ZOrder::SCORE, @score_align, 0)
       end
 
       super
