@@ -3,3 +3,6 @@
 :difficulty:
   0: :normal
   1: :normal
+:playlist:
+  :track:
+  :random: false

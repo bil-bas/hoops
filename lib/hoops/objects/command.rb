@@ -2,11 +2,12 @@ module Hoops
   class Command < PhysicsObject
     DIRECTIONS = [:up, :down, :left, :right]
     Y_POSITIONS = {
-        up: 33,
-        down: 40,
-        left: 47,
-        right: 54,
+        up: 31,
+        down: 38,
+        left: 45,
+        right: 52,
     }
+
     ANIMATIONS = {
         up: "rolling_hoop_9x9.png",
         down: "rolling_hoop_9x9.png",
