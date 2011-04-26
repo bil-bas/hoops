@@ -5,15 +5,17 @@ module Hoops
     SCORE_INDENT = 10
     PET_OFFSET = 15
 
-    attr_reader :number
+    attr_reader :number, :difficulty_settings
 
-    def initialize(number, difficulty, options = {})
+    def initialize(number, difficulty_settings, options = {})
       options = {
       }.merge! options
 
       super options
 
-      @number = number
+      @number, @difficulty_settings = number, difficulty_settings
+
+      log.debug { "Playing with difficulty: #{@difficulty_settings}" }
 
       @animations = Animation.new(file: "player#{@number + 1}_16x16.png", delay: 250)
       @animation_sets = [@animations[0..3], @animations[4..7], @animations[8..11]]
@@ -22,7 +24,7 @@ module Hoops
 
       @@keys_config ||= Settings.new(KEYS_CONFIG_FILE)
 
-      @incoming = IncomingList.create(self, difficulty)
+      @incoming = IncomingList.create(self, difficulty_settings)
 
       @score = 0
       @multiplier = 1

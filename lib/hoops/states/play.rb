@@ -9,12 +9,12 @@ module Hoops
     SONG_VOLUME_FULL = 0.25
     SONG_VOLUME_MUTED = 0.05
 
-    def initialize(difficulty)
+    def initialize(settings1, settings2)
       super()
 
       middle = (($window.retro_width - 1) / 2.0)
-      @player1 = Player.create(0, difficulty, x: middle - 8, y: 25)
-      @player2 = Player.create(1, difficulty, x: middle + 8, y: 25)
+      @player1 = Player.create(0, settings1, x: middle - 8, y: 25)
+      @player2 = Player.create(1, settings2, x: middle + 8, y: 25)
 
       @background_image = TexPlay.create_image($window, $window.width / $window.sprite_scale,
                                                $window.height / $window.sprite_scale, color: [0.1, 0.45, 0.7, 1])

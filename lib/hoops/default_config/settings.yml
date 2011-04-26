@@ -1,2 +1,5 @@
 ---
 :debug_mode: on
+:difficulty:
+  0: :normal
+  1: :normal
