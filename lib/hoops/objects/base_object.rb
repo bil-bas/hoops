@@ -1,6 +1,8 @@
 module Hoops
   # 2.5D object.
   class BaseObject < GameObject
+    include Log
+
     SHADOW_ALPHA = 0.5
 
     attr_reader :z
