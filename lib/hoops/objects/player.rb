@@ -9,6 +9,7 @@ module Hoops
 
     def initialize(number, difficulty_settings, options = {})
       options = {
+          factor: 1.25,
       }.merge! options
 
       super options
