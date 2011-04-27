@@ -1,4 +1,6 @@
 /.idea
-*.log
+/*.log
 /media/animations/*.gif
-*.exe
+/*.exe
+/README.html
+/pkg

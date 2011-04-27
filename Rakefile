@@ -2,7 +2,7 @@ require 'rake/clean'
 require 'redcloth'
 
 APP = "hoops"
-RELEASE_VERSION = "0.0.1alpha"
+RELEASE_VERSION = "0.1.0"
 
 EXECUTABLE = "#{APP}.exe"
 SOURCE_FOLDERS = %w[bin lib media]
