@@ -33,8 +33,8 @@ h3. OS X and Linux (or Windows from source)
 
 h4. To install gems
 
-* gem install gosu texplay --no-ri --no-rdoc
-* gem install fidgit chingu --pre --no-ri --no-rdoc
+* `gem install gosu texplay --no-ri --no-rdoc`
+* `gem install fidgit chingu --pre --no-ri --no-rdoc`
 
 h2. Credits
 
