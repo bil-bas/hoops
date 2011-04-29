@@ -54,6 +54,10 @@ class Game < Window
 
   # To change
   def setup
+    %w[Gosu Chingu Fidgit TexPlay].each do |gem|
+      log.info { "Using #{gem} gem (#{Kernel.const_get(gem)::VERSION})" }
+    end
+
     media_dir = File.expand_path(File.join(EXTRACT_PATH, 'media'))
     Image.autoload_dirs.unshift File.join(media_dir, 'images')
     Sample.autoload_dirs.unshift File.join(media_dir, 'sounds')
