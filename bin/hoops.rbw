@@ -10,7 +10,7 @@ begin
   end
 
   APP_NAME = File.basename(__FILE__).chomp(File.extname(__FILE__))
-  LOG_FILE = File.join(ROOT_PATH, "#{APP_NAME}_#{Time.now.to_s.gsub(/[^\d]/, "_")}_#{Time.now.usec.to_s.rjust(6, '0')}.log")
+  LOG_FILE = File.join(ROOT_PATH, "#{APP_NAME}.log")
 
   BIN_DIR = File.join(ROOT_PATH, 'bin')
   ENV['PATH'] = "#{BIN_DIR};#{ENV['PATH']}"
