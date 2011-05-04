@@ -4,6 +4,12 @@ require 'yaml'
 require 'fileutils'
 require 'logger'
 
+begin
+  require "rubygems"
+  require "bundler/setup"
+rescue LoadError
+end
+
 # Gems
 require 'chingu'
 require 'texplay'
