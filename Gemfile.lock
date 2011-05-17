@@ -6,11 +6,15 @@ GEM
     fidgit (0.0.5alpha)
       chingu (~> 0.9rc4)
       gosu (~> 0.7.28)
-    gosu (0.7.31-x86-mingw32)
+    gosu (0.7.29)
+    gosu (0.7.29-x86-mingw32)
+    texplay (0.3.5)
+      gosu (>= 0.7.25)
     texplay (0.3.5-x86-mingw32)
       gosu (>= 0.7.25)
 
 PLATFORMS
+  ruby
   x86-mingw32
 
 DEPENDENCIES

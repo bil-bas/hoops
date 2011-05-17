@@ -1,0 +1,12 @@
+=== CHANGELOG ===
+
+v0.1.1 (2011-05-17) - Trivial changes, unless you have OS X :P
+
+  * === Added OS X [10.6] executable.
+
+  * Overwrites the same log file each time it is run (before it created one for every run).
+  * Slightly increased size of dancers.
+
+ v0.1.0 (2011-04-27)
+
+  * First public release

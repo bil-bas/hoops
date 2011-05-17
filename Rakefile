@@ -1,8 +1,10 @@
 require 'rake/clean'
 require 'redcloth'
 
+require_relative "lib/hoops/version"
+RELEASE_VERSION = Hoops::VERSION
+
 APP = "hoops"
-RELEASE_VERSION = "0.1.0"
 
 EXECUTABLE = "#{APP}.exe"
 SOURCE_FOLDERS = %w[bin lib media]
@@ -16,9 +18,12 @@ RELEASE_FOLDER_SOURCE = "#{RELEASE_FOLDER_BASE}_SOURCE"
 
 README_TEXTILE = "README.textile"
 README_HTML = "README.html"
+CHANGELOG = "CHANGELOG.txt"
 
 CLEAN.include("*.log")
 CLOBBER.include("doc/**/*", "#{APP}.exe", RELEASE_FOLDER, README_HTML)
+
+require_relative "build/rake_osx_package"
 
 desc "Generate Yard docs."
 task :yard do
