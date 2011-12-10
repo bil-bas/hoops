@@ -53,13 +53,13 @@ module Hoops
     def hit
       flash(Command::COLORS[name].dup, HIT_FLASH_DURATION)
       @player.increment_multiplier
-      @hit_sample.play(0.5)
+      #@hit_sample.play(0.5)
     end
 
     def perfect_hit
       flash(Command::COLORS[name].dup, PERFECT_HIT_FLASH_DURATION)
       @player.increment_multiplier
-      @hit_sample.play(0.8)
+      #@hit_sample.play(0.8)
     end
 
     def miss
