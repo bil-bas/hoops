@@ -5,9 +5,9 @@
 GAME_URL = "com.github.spooner.#{APP}"
 OSX_APP = "#{APP.capitalize}.app"
 
-OSX_GEMS = %w[chingu fidgit]
+OSX_GEMS = %w[chingu fidgit clipboard]
 
-RELEASE_FOLDER_OSX = "#{RELEASE_FOLDER_BASE}_OSX_10_6"
+RELEASE_FOLDER_OSX = "#{RELEASE_FOLDER_BASE}_OSX"
 
 OSX_BUILD_DIR =  File.join(File.dirname(File.dirname(File.dirname(File.dirname(__FILE__)))), "gosu_wrappers")
 BASE_OSX_APP = File.join(OSX_BUILD_DIR, "RubyGosu App.app")
@@ -35,7 +35,7 @@ end
 
 file OSX_APP => :osx_app
 
-desc "Generate #{OSX_APP} (OS X 10.6) v#{RELEASE_VERSION}"
+desc "Generate #{OSX_APP} (OS X) v#{RELEASE_VERSION}"
 task osx_app: :readme do
   puts "--- Copying App"
   mkdir_p TMP_OSX_PKG_DIR
@@ -60,6 +60,10 @@ task osx_app: :readme do
     if gem == "fidgit"
       ["config", "media"].each do |folder|
         cp_r File.expand_path(File.join(gem_path, '..', folder)), File.dirname(TMP_OSX_GEM_DIR)
+      end
+    elsif gem == "clipboard"
+      ["VERSION"].each do |file|
+        cp_r File.expand_path(File.join(gem_path, '..', file)), File.dirname(TMP_OSX_GEM_DIR)
       end
     end
   end
@@ -90,11 +94,11 @@ END_TEXT
   cd OSX_BUILD_DIR
   package_dir = TMP_OSX_PKG_DIR.sub(OSX_BUILD_DIR, '').sub(/^\//, '')
 
-  tar_package = "#{package_dir}.tar.bz2"
-  system "tar -jcvf #{tar_package} #{package_dir}"
+  #tar_package = "#{package_dir}.tar.bz2"
+  #system "tar -jcvf #{tar_package} #{package_dir}"
 
-  seven_z_package = "#{package_dir}.7z"
-  system "7z a #{seven_z_package} #{package_dir}"
+  #seven_z_package = "#{package_dir}.7z"
+  #system "7z a #{seven_z_package} #{package_dir}"
 
   zip_package = "#{package_dir}.zip"
   system "7z a -tzip #{zip_package} #{package_dir}"
@@ -103,7 +107,7 @@ END_TEXT
 
   mkdir_p RELEASE_FOLDER
 
-  mv File.join(OSX_BUILD_DIR, tar_package), RELEASE_FOLDER
-  mv File.join(OSX_BUILD_DIR, seven_z_package), RELEASE_FOLDER
+  #mv File.join(OSX_BUILD_DIR, tar_package), RELEASE_FOLDER
+  #mv File.join(OSX_BUILD_DIR, seven_z_package), RELEASE_FOLDER
   mv File.join(OSX_BUILD_DIR, zip_package), RELEASE_FOLDER
 end
