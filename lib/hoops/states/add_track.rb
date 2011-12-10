@@ -8,10 +8,12 @@ module Hoops
 
       on_input(:escape) { pop_game_state }
 
-      @button_options = { font_size: 32, justify: :center, width: 160 }
+      @button_options = { font_size: 32, justify: :center, width: 100 }
 
-      vertical padding: 0 do
-        file_browser :open, width: $window.width - 40, directory: ROOT_PATH, pattern: "*.ogg" do |sender, result, file|
+      vertical padding: 8 do
+        label "Browse to an Ogg Vorbis music file (*.ogg)"
+
+        file_browser :open, width: $window.width - 32, margin: 0, directory: ROOT_PATH, pattern: "*.ogg" do |sender, result, file|
           case result
             when :open
               name = File.basename(file).tr('_', ' ')

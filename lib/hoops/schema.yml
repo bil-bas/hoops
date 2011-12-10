@@ -1,7 +1,7 @@
 ---
 :Element:
   :font_name: pixelated.ttf
-  :font_size: 24
+  :font_height: 16
   :background_color: ?none
 
 :Button:
@@ -13,4 +13,4 @@
   :border_thickness: 0
 
 :ToolTip:
-  :font_size: 15
+  :font_height: 12

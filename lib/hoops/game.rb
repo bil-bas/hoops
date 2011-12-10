@@ -3,6 +3,7 @@ require 'forwardable'
 require 'yaml'
 require 'fileutils'
 require 'logger'
+require 'version'
 
 begin
   require "rubygems"
@@ -52,7 +53,7 @@ class Game < Window
 
   SIZE = [768, 480]
 
-  TITLE = "=== An indeterminate number of hoops ==="
+  TITLE = "=== An indeterminate number of hoops v#{VERSION} ==="
   attr_reader :pixel, :sprite_scale
 
   def retro_width; width / @sprite_scale; end

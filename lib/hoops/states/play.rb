@@ -24,6 +24,8 @@ module Hoops
       @background_image = TexPlay.create_image($window, $window.width / $window.sprite_scale,
                                                $window.height / $window.sprite_scale, color: BACKGROUND_COLOR)
 
+      @background_image.refresh_cache
+
       @background_image.rect 0, @background_image.height - TIME_BAR_THICKNESS,
                              @background_image.width, @background_image.height,
                              color: :black, fill: true

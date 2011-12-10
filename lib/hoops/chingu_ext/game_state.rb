@@ -36,7 +36,8 @@ module Chingu
 
     public
     def make_glow
-      @@glow = TexPlay.create_image($window, GLOW_WIDTH, GLOW_WIDTH)
+      @@glow = TexPlay.create_image($window, GLOW_WIDTH, GLOW_WIDTH, color: :alpha)
+      @@glow.refresh_cache
 
       center = @@glow.width / 2.0
       radius =  @@glow.width / 2.0

@@ -12,7 +12,7 @@ module Hoops
 
       @difficulty = []
 
-      vertical padding: 16, spacing: 40 do
+      vertical padding: 16, spacing: 40, align: :center, width: @container.width, height: @container.height do
         track_selector
 
         players
@@ -24,7 +24,7 @@ module Hoops
     end
 
     def players
-      horizontal padding: 0 do
+      horizontal padding: 0, align_h: :center do
         2.times do |number|
           vertical do
             label "Player #{number + 1}", font_size: 48
@@ -63,7 +63,7 @@ module Hoops
           @tracks += Settings.new(PLAYLIST_CONFIG_FILE)[:tracks]
 
           selected_track_index = rand(@tracks.size)
-          @track_choice = combo_box enabled: (not settings[:playlist, :random]), font_size: 24 do
+          @track_choice = combo_box enabled: (not settings[:playlist, :random]) do
 
             @tracks.each_with_index do |track, i|
               track_name = track[:name]
@@ -77,23 +77,22 @@ module Hoops
     end
 
     def buttons
-      horizontal spacing: 20 do
-        button("Back", @button_options) { pop_game_state }
-        button("Dance!", @button_options) do
-          # Save difficulty settings
-          2.times do |number|
-            settings[:difficulty, number] = @difficulty[number].value
-          end
-
-          # Save track settings.
-          track = @track_random.value ? @tracks.sample : @tracks[@track_choice.value]
-          settings[:playlist, :random] = @track_random.value
-          settings[:playlist, :track] = track[:file] unless @track_random.value
-
-          push_game_state Play.new(DIFFICULTY_SETTINGS[@difficulty[0].value],
-                                   DIFFICULTY_SETTINGS[@difficulty[1].value], track)
+      button("Dance!!!", @button_options.merge(align: :center, font_height: 70, width: 300)) do
+        # Save difficulty settings
+        2.times do |number|
+          settings[:difficulty, number] = @difficulty[number].value
         end
+
+        # Save track settings.
+        track = @track_random.value ? @tracks.sample : @tracks[@track_choice.value]
+        settings[:playlist, :random] = @track_random.value
+        settings[:playlist, :track] = track[:file] unless @track_random.value
+
+        push_game_state Play.new(DIFFICULTY_SETTINGS[@difficulty[0].value],
+                                 DIFFICULTY_SETTINGS[@difficulty[1].value], track)
       end
+
+      button("Cancel", @button_options.merge(width: 70)) { pop_game_state }
     end
   end
 end
