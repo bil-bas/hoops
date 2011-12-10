@@ -1,6 +1,6 @@
 source "http://gemcutter.org"
 
-gem "gosu", "~>0.7.27"
-gem "chingu", "~>0.9rc4"
-gem "fidgit", "~>0.0.5alpha"
-gem "texplay", "~>0.3.5"
+gem "gosu", "~>0.7.38"
+gem "chingu", "~>0.9rc7"
+gem "fidgit", "~>0.1.9"
+gem "texplay", "~>0.3"

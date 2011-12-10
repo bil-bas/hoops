@@ -5,9 +5,9 @@ module Hoops
     def initialize
       super
 
-      @button_options = { font_size: 32, justify: :center, width: 160 }
+      @button_options = { font_size: 32, justify: :center, width: 175 }
 
-      pack :vertical, spacing: 30, padding: 20 do
+      vertical spacing: 30, padding: 20 do
         label "User-defined tracks"
         track_list
         buttons
@@ -32,13 +32,13 @@ module Hoops
       @playlist = Settings.new(Difficulty::PLAYLIST_CONFIG_FILE)
 
       scroll_window width: $window.width - 40, height: $window.height * 0.6 do
-        @track_grid = pack :grid, num_columns: 3, spacing: 8
+        @track_grid = grid num_columns: 3, spacing: 8
         populate_track_grid
       end
     end
 
     def buttons
-      pack :horizontal, spacing: 20 do
+      horizontal spacing: 20 do
         button("Back", @button_options) { pop_game_state }
         button "Add track...", @button_options.merge(tip: "Add a track from your computer to use in the game") do
           @add_track = AddTrack.new

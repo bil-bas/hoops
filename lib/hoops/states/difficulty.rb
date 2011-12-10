@@ -12,7 +12,7 @@ module Hoops
 
       @difficulty = []
 
-      pack :vertical, padding: 16, spacing: 40 do
+      vertical padding: 16, spacing: 40 do
         track_selector
 
         players
@@ -24,13 +24,13 @@ module Hoops
     end
 
     def players
-      pack :horizontal, padding: 0 do
+      horizontal padding: 0 do
         2.times do |number|
-          pack :vertical do
+          vertical do
             label "Player #{number + 1}", font_size: 48
             label "Difficulty", font_size: 32
             @difficulty << group do
-              pack :vertical, spacing: 8 do
+              vertical spacing: 8 do
                 DIFFICULTY_SETTINGS.each_pair do |difficulty, settings|
                   radio_button settings[:name], difficulty, @button_options.merge(font_size: 24)
                 end
@@ -43,10 +43,10 @@ module Hoops
     end
 
     def track_selector
-      pack :horizontal do
+      horizontal do
         label "Track: "
 
-        pack :vertical do
+        vertical do
           @track_random = toggle_button "Random", value: settings[:playlist, :random] do |sender, value|
              @track_choice.enabled = (not value)
           end
@@ -77,7 +77,7 @@ module Hoops
     end
 
     def buttons
-      pack :horizontal, spacing: 20 do
+      horizontal spacing: 20 do
         button("Back", @button_options) { pop_game_state }
         button("Dance!", @button_options) do
           # Save difficulty settings
