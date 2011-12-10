@@ -1,6 +1,7 @@
 h1. === An indeterminate number of hoops! ===
 
-* "Github project (Spooner/hoops)":https://github.com/Spooner/hoops
+* Website: http://spooner.github.com/games/hoops/
+* The game was developed by Spooner (Bil Bas) bil.bagpuss@gmail.com
 
 h2. Description
 
@@ -43,13 +44,6 @@ h4. Using Bundler to install gems
     gem install bundler --no-ri --no-rdoc
 </pre>
 
-h4. Manual installation of gems
-
-<pre>
-    gem install gosu texplay --no-ri --no-rdoc
-    gem install fidgit chingu --pre --no-ri --no-rdoc
-</pre>
-
 
 h4. To run
 
@@ -60,6 +54,7 @@ h4. To run
 h2. Credits
 
 * SiliconEidolon for playtesting.
+* jlnr for help testing the OS X port.
 
 h2. Third party assets used
 

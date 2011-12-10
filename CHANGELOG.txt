@@ -1,5 +1,10 @@
 === CHANGELOG ===
 
+v0.1.2 (2011-12-10)
+
+  * Reduced font size so that it is easier to use the GUI.
+  * OS X executable should now work on all OS X versions from 10.5.
+
 v0.1.1 (2011-05-17) - Trivial changes, unless you have OS X :P
 
   * === Added OS X [10.6] executable.
