@@ -1,5 +1,5 @@
-require_relative "hoops/game"
-
 if $0 == __FILE__
-  puts "Run Hoops with bin/hoops.rbw"
+  puts "Run Hoops with 'ruby bin/hoops.rbw'"
+else
+  require_relative "hoops/game"
 end

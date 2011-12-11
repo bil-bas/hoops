@@ -3,12 +3,16 @@ require 'forwardable'
 require 'yaml'
 require 'fileutils'
 require 'logger'
-require 'version'
 
 begin
-  require "rubygems"
-  require "bundler/setup"
+  require 'bundler/setup' unless defined?(OSX_EXECUTABLE) or ENV['OCRA_EXECUTABLE']
+
 rescue LoadError
+  $stderr.puts "Bundler gem not installed. To install:\n  gem install bundler"
+  exit
+rescue Exception
+  $stderr.puts "Gem dependencies not met. To install:\n  bundle install"
+  exit
 end
 
 # Gems
@@ -17,16 +21,6 @@ require 'texplay'
 require 'fidgit'
 
 SCHEMA_FILE = File.join(EXTRACT_PATH, 'lib', 'hoops', 'schema.yml')
-
-
-begin
-  # If this isn't the exe, allow dropping into a pry session.
-  unless defined? Ocra
-    require 'pry'
-    require 'win32console'
-  end
-rescue LoadError
-end
 
 include Gosu
 include Chingu
