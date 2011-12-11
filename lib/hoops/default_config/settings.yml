@@ -1,6 +1,9 @@
 ---
 :debug_mode: on
-:difficulty:
+:playing: # Who are playing.
+  0: true
+  1: true
+:difficulty: # What difficulties they desire.
   0: :normal
   1: :normal
 :playlist:

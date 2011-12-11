@@ -1,5 +1,7 @@
 module Hoops
   class Difficulty < Gui
+    PLAYER_NAMES = ["Meow", "Star"]
+
     PLAYLIST_CONFIG_FILE = "playlist.yml"
 
     DIFFICULTY_FILE = File.join(EXTRACT_PATH, 'lib', 'hoops', 'difficulty.yml')
@@ -8,11 +10,11 @@ module Hoops
     def initialize
       super
 
-      @button_options = { font_size: 32, justify: :center, width: 160 }
+      @button_options = { justify: :center, width: 120 }
 
       @difficulty = []
 
-      vertical padding: 16, spacing: 40, align: :center, width: @container.width, height: @container.height do
+      vertical padding: 16, spacing: 15, align: :center, width: @container.width, height: @container.height do
         track_selector
 
         players
@@ -24,27 +26,57 @@ module Hoops
     end
 
     def players
-      horizontal padding: 0, align_h: :center do
-        2.times do |number|
-          vertical do
-            label "Player #{number + 1}", font_size: 48
-            label "Difficulty", font_size: 32
-            @difficulty << group do
-              vertical spacing: 8 do
-                DIFFICULTY_SETTINGS.each_pair do |difficulty, settings|
-                  radio_button settings[:name], difficulty, @button_options.merge(font_size: 24)
-                end
-              end
-            end
-            @difficulty.last.value = settings[:difficulty, number]
+      @players_selected = group do
+        horizontal padding: 0, align_h: :center do
+          label "Dancers: ", width: 100
+          radio_button "#{PLAYER_NAMES[0]} only", [true, false], tip: "Play with just one dancer (on the left)"
+          radio_button "Both", [true, true], tip: "Play with both dancers"
+          radio_button "#{PLAYER_NAMES[1]} only", [false, true], tip: "Play with just one dancer (on the right)"
+        end
+
+        subscribe :changed do |control, players_playing|
+          @difficulty_controls.each_pair do |player, control|
+            control.each {|c| c.enabled = players_playing[player] }
           end
         end
       end
+
+      vertical align_h: :center do
+        horizontal padding: 0, align_h: :center do
+          @difficulty_controls = Hash.new {|h, k| h[k] = [] }
+
+          2.times do |number|
+            player_image(number) if number == 0
+
+            vertical align_h: :center do
+              label "#{PLAYER_NAMES[number]}", font_height: 40,align_h: :center
+              label "Difficulty", font_height: 12, align_h: :center
+              @difficulty << group do
+                vertical spacing: 8, padding: 0 do
+                  DIFFICULTY_SETTINGS.each_pair do |difficulty, settings|
+                    @difficulty_controls[number] << radio_button(settings[:name], difficulty, @button_options)
+                  end
+                end
+              end
+              @difficulty.last.value = settings[:difficulty, number]
+            end
+
+            player_image(number) if number == 1
+          end
+        end
+      end
+
+      @players_selected.value = [settings[:playing, 0], settings[:playing, 1]]
+    end
+
+    def player_image(number)
+      image = Image.load_tiles($window, File.join(Image.autoload_dirs[0], "player#{number + 1}_16x16.png"), 16, 16, true)[0]
+      image_frame image, factor: 12, padding_top: 20, tip: PLAYER_NAMES[number]
     end
 
     def track_selector
-      horizontal do
-        label "Track: "
+      horizontal padding: 0 do
+        label "Track:", width: 100
 
         vertical do
           @track_random = toggle_button "Random", value: settings[:playlist, :random] do |sender, value|
@@ -64,7 +96,6 @@ module Hoops
 
           selected_track_index = rand(@tracks.size)
           @track_choice = combo_box enabled: (not settings[:playlist, :random]) do
-
             @tracks.each_with_index do |track, i|
               track_name = track[:name]
               item "#{track_name} (#{track[:duration]})", i
@@ -77,22 +108,32 @@ module Hoops
     end
 
     def buttons
-      button("Dance!!!", @button_options.merge(align: :center, font_height: 70, width: 300)) do
-        # Save difficulty settings
-        2.times do |number|
-          settings[:difficulty, number] = @difficulty[number].value
+      vertical spacing: 0, padding: 0, width: @container.width do
+        button("Dance!!!", @button_options.merge(align: :center, font_height: 70, width: 300)) do
+          # Save difficulty settings
+          2.times do |number|
+            settings[:playing, number] = @players_selected.value[number]
+            settings[:difficulty, number] = @difficulty[number].value
+          end
+
+
+          # Save track settings.
+          track = @track_random.value ? @tracks.sample : @tracks[@track_choice.value]
+          settings[:playlist, :random] = @track_random.value
+          settings[:playlist, :track] = track[:file] unless @track_random.value
+
+          settings_1 = settings[:playing, 0] ? DIFFICULTY_SETTINGS[@difficulty[0].value] : nil
+          settings_2 = settings[:playing, 1] ? DIFFICULTY_SETTINGS[@difficulty[1].value] : nil
+          push_game_state Play.new(settings_1, settings_2, track)
         end
 
-        # Save track settings.
-        track = @track_random.value ? @tracks.sample : @tracks[@track_choice.value]
-        settings[:playlist, :random] = @track_random.value
-        settings[:playlist, :track] = track[:file] unless @track_random.value
-
-        push_game_state Play.new(DIFFICULTY_SETTINGS[@difficulty[0].value],
-                                 DIFFICULTY_SETTINGS[@difficulty[1].value], track)
+        button("Cancel", @button_options.merge(width: 70, align_v: :bottom)) { pop_game_state }
       end
+    end
 
-      button("Cancel", @button_options.merge(width: 70)) { pop_game_state }
+    def draw
+      $window.pixel.draw(0, 0, ZOrder::BACKGROUND, $window.width, $window.height, Menu::BACKGROUND_COLOR)
+      super
     end
   end
 end

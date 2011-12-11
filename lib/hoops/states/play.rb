@@ -18,8 +18,11 @@ module Hoops
       @track = track
 
       middle = (($window.retro_width - 1) / 2.0)
-      @player1 = Player.create(0, settings1, x: middle - 8, y: PLAYER_Y)
-      @player2 = Player.create(1, settings2, x: middle + 8, y: PLAYER_Y)
+
+      @parameters = [settings1, settings2, track]
+
+      @player1 = Player.create(0, settings1, x: middle - 8, y: PLAYER_Y) unless settings1.nil?
+      @player2 = Player.create(1, settings2, x: middle + 8, y: PLAYER_Y)  unless settings2.nil?
 
       @background_image = TexPlay.create_image($window, $window.width / $window.sprite_scale,
                                                $window.height / $window.sprite_scale, color: BACKGROUND_COLOR)
@@ -33,8 +36,8 @@ module Hoops
       @time_font = Font["pixelated.ttf", 24]
 
       Command::Y_POSITIONS.each_value do |y|
-        Fire.create(x: $window.retro_width / 2, y: y)
-        Fire.create(x: $window.retro_width / 2, y: y + 3.5)
+        Fire.create(x: $window.retro_width / 2, y: y) if @player1
+        Fire.create(x: $window.retro_width / 2, y: y + 3.5) if @player2
       end
 
       on_input(:escape) { pop_game_state }
@@ -50,12 +53,16 @@ module Hoops
       @song.pause
     end
 
+    def restart
+      switch_game_state Play.new(*@parameters)
+    end
+
     def setup
       @song.play
     end
 
     def finalize
-      @song.pause
+      @song.stop
     end
 
     def mute_song(duration)
