@@ -14,7 +14,7 @@
   :speed: 0.02
   :multiplier: 1
   :pet_chance: 0.08
-  :double_chance: 0.02
+  :double_chance: 0
   :gap_chance: 0.1
 
 :hard:
@@ -23,7 +23,7 @@
   :speed: 0.025
   :multiplier: 2
   :pet_chance: 0.06
-  :double_chance: 0.1
+  :double_chance: 0
   :gap_chance: 0.1
 
 :awesome:
@@ -32,5 +32,5 @@
   :speed: 0.03
   :multiplier: 3
   :pet_chance: 0.05
-  :double_chance: 0.2
+  :double_chance: 0
   :gap_chance: 0.1

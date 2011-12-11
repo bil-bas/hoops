@@ -2,6 +2,7 @@
 
 v1.0.0 (2011-12-10)
 
+  * Stopped spitting out more than one hoop at once, since there is a good chance that the keyboard can't read two keys at once.
   * Added menu on game-over, so you can go replay the same game or go back to menu or quit.
   * Added one-player mode to allow player to control either dancer (previously only 2-player mode was available).
   * Reduced font size so that it is easier to use the GUI.
