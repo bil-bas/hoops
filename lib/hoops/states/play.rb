@@ -92,8 +92,29 @@ module Hoops
         @game_duration = [@game_duration + frame_time, @track_duration].min
         super
       else
-        push_game_state GameOver
+        game_over
       end
+    end
+
+    def game_over
+      if @player1 and @player2
+        if @player1.score > @player2.score
+          @player1.win
+          @player2.lose
+        elsif @player2.score > @player1.score
+          @player1.lose
+          @player2.win
+        else
+          @player1.win
+          @player2.win
+        end
+      elsif @player1
+        @player1.win
+      elsif @player2
+        @player2.win
+      end
+
+      push_game_state GameOver
     end
   end
 end

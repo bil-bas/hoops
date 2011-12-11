@@ -49,8 +49,7 @@ module Hoops
             player_image(number) if number == 0
 
             vertical align_h: :center do
-              label "#{PLAYER_NAMES[number]}", font_height: 40,align_h: :center
-              label "Difficulty", font_height: 12, align_h: :center
+              label "#{PLAYER_NAMES[number]}", font_height: 52, align_h: :center
               @difficulty << group do
                 vertical spacing: 8, padding: 0 do
                   DIFFICULTY_SETTINGS.each_pair do |difficulty, settings|
@@ -115,7 +114,6 @@ module Hoops
             settings[:playing, number] = @players_selected.value[number]
             settings[:difficulty, number] = @difficulty[number].value
           end
-
 
           # Save track settings.
           track = @track_random.value ? @tracks.sample : @tracks[@track_choice.value]

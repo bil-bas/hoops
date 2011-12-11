@@ -5,7 +5,7 @@ module Hoops
     SCORE_INDENT = 10
     PET_OFFSET = 15
 
-    attr_reader :number, :difficulty_settings
+    attr_reader :number, :difficulty_settings, :score
 
     def initialize(number, difficulty_settings, options = {})
       options = {
@@ -43,6 +43,20 @@ module Hoops
     def update
       super
       self.image = @current_animation.next
+    end
+
+    def win
+      self.image = @animations[12]
+    end
+
+    def lose
+      if @number == 0
+        @x -= 6
+      elsif @number == 1
+        @x += 6
+      end
+
+      self.image = @animations[13]
     end
 
     def reset_multiplier
