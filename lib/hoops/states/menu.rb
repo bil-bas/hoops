@@ -22,7 +22,7 @@ module Hoops
           options = { width: 200, font_height: 30, justify: :center }
           button("Play", options.merge(tip: 'Both players on the same keyboard')) { play }
           button("Options", options) { push_game_state OptionsPlaylist }
-          button("About", options.merge(enabled: false))
+          #button("About", options.merge(enabled: false))
           button("Exit", options) { close }
         end
       end
