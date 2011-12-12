@@ -47,7 +47,7 @@ class Game < Window
 
   SIZE = [768, 480]
 
-  TITLE = "=== An indeterminate number of hoops v#{VERSION} ==="
+  TITLE = "=== An indeterminate number of HOOPS v#{VERSION} ==="
   attr_reader :pixel, :sprite_scale
 
   def retro_width; width / @sprite_scale; end
