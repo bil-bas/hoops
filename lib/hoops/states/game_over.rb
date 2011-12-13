@@ -26,7 +26,7 @@ module Hoops
             game_state_manager.pop_until_game_state Menu
           end
 
-          button "Quit", button_options.merge(tip: "Quit to desktop") do
+          button "Exit", button_options.merge(tip: "Quit to desktop") do
             exit
           end
         end
