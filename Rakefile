@@ -7,7 +7,7 @@ APP_READABLE = "HOOPS!"
 require_relative "lib/#{APP}/version"
 RELEASE_VERSION = Hoops::VERSION
 
-OSX_GEMS = %w[chingu fidgit clipboard] # Source gems for inclusion in the .app package.
+OSX_GEMS = %w[chingu fidgit clipboard ogginfo] # Source gems for inclusion in the .app package.
 
 #LICENSE_FILE = "COPYING.txt"
 

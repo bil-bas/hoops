@@ -71,10 +71,10 @@ module Hoops
     protected
     # Loads settings from the user file, using default settings if they are missing.
     def load_settings
-      user_settings = YAML::load(File.read(@user_file))
-      default_settings = YAML::load(File.read(@default_file))
+      user_settings = YAML::load_file(@user_file)
+      default_settings = YAML::load_file(@default_file)
 
-      @settings = default_settings.merge user_settings
+      @settings = default_settings.deep_merge user_settings
       save_settings
 
       log.debug { "Loaded settings from '#{@user_file}': #{@settings.inspect}" }

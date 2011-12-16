@@ -16,6 +16,7 @@ rescue Exception
 end
 
 # Gems
+require 'ogginfo'
 require 'chingu'
 require 'texplay'
 require 'fidgit'
@@ -76,7 +77,6 @@ class Game < Window
 
     push_game_state Menu
   end
-
 
   def draw
     draw_started = milliseconds

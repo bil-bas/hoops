@@ -3,8 +3,6 @@ module Hoops
     trait :timer
 
     BACKGROUND_COLOR = Color.rgb(26, 114, 179)
-
-    DEFAULT_VOLUME = 0.25
     SONG_VOLUME_MUTED = 0.20 # 1/5 fof normal volume when muted
 
     TIME_BAR_THICKNESS = 3
@@ -41,17 +39,16 @@ module Hoops
       end
 
       on_input(:escape) { pop_game_state }
-      minutes, seconds = @track[:duration].split(':').map {|t| t.to_i }
 
-      @track_duration = ((minutes * 60) + seconds) * 1000.0
+      @track_duration_ms = @track.duration * 1000.0
       @game_duration = 0
 
-      log.info { "Playing track '#{track[:name]}' from '#{@track[:file]}' for #{@track[:duration]} (#{@track_duration}ms)" }
+      log.info { "Playing track '#{@track.name}' from '#{@track.file}' for #{@track.duration_string}" }
 
-      @volume_full = track[:volume] || DEFAULT_VOLUME
+      @volume_full = @track.volume
       @volume_muted = @volume_full * SONG_VOLUME_MUTED
 
-      @song = Song[@track[:file]]
+      @song = Song[@track.file]
       @song.volume = @volume_full
       @song.pause
     end
@@ -79,8 +76,8 @@ module Hoops
       @background_image.draw(0, 0, ZOrder::BACKGROUND)
 
       # Time bar.
-      remaining_time = @track_duration - @game_duration
-      width = [$window.retro_width * (remaining_time / @track_duration), 0].max
+      remaining_time = @track_duration_ms - @game_duration
+      width = [$window.retro_width * (remaining_time / @track_duration_ms), 0].max
       $window.pixel.draw_rot $window.retro_width / 2, $window.retro_height, ZOrder::SCORE, 0, 0.5, 1, width, TIME_BAR_THICKNESS
 
       time = "%d:%02d" % (remaining_time / 1000.0).divmod(60)
@@ -90,9 +87,9 @@ module Hoops
     end
 
     def update
-      remaining_time = @track_duration - @game_duration
+      remaining_time = @track_duration_ms - @game_duration
       if @song.playing? and remaining_time > 0
-        @game_duration = [@game_duration + frame_time, @track_duration].min
+        @game_duration = [@game_duration + frame_time, @track_duration_ms].min
         super
       else
         game_over

@@ -2,8 +2,6 @@ module Hoops
   class Difficulty < Gui
     PLAYER_NAMES = ["Meow", "Star"]
 
-    PLAYLIST_CONFIG_FILE = "playlist.yml"
-
     DIFFICULTY_FILE = File.join(EXTRACT_PATH, 'lib', 'hoops', 'difficulty.yml')
     DIFFICULTY_SETTINGS = YAML.load(File.read(DIFFICULTY_FILE))
 
@@ -83,22 +81,13 @@ module Hoops
           end
 
           # The tracklist is both the ones that come with the game and any added by the user.
-          @tracks = []
-          game_tracks = Dir[File.join(EXTRACT_PATH, "media", "music", "*.ogg")]
-          game_tracks.each do |track_file|
-            if File.basename(track_file) =~ /^(.*) (\d+)@(\d+)_(\d+).ogg$/
-              @tracks << { name: $1, file: track_file, volume: ($2.to_f / 100), duration: "#{$3}:#{$4}" }
-            end
-          end
-
-          @tracks += Settings.new(PLAYLIST_CONFIG_FILE)[:tracks].select {|t| File.exists? t[:file] }
+          @tracks = Tracklist.new
 
           selected_track_index = rand(@tracks.size)
           @track_choice = combo_box enabled: (not settings[:playlist, :random]) do
             @tracks.each_with_index do |track, i|
-              track_name = track[:name]
-              item "#{track_name} (#{track[:duration]})", i
-              selected_track_index = i if track[:file] == settings[:playlist, :track]
+              item "#{track.name} (#{track.duration_string})", i
+              selected_track_index = i if track.file == settings[:playlist, :track]
             end
           end
           @track_choice.value = selected_track_index
@@ -118,7 +107,7 @@ module Hoops
           # Save track settings.
           track = @track_random.value ? @tracks.sample : @tracks[@track_choice.value]
           settings[:playlist, :random] = @track_random.value
-          settings[:playlist, :track] = track[:file] unless @track_random.value
+          settings[:playlist, :track] = track.file unless @track_random.value
 
           settings_1 = settings[:playing, 0] ? DIFFICULTY_SETTINGS[@difficulty[0].value] : nil
           settings_2 = settings[:playing, 1] ? DIFFICULTY_SETTINGS[@difficulty[1].value] : nil

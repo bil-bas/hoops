@@ -14,6 +14,7 @@ GEM
       gosu (~> 0.7.33)
     gosu (0.7.40)
     gosu (0.7.40-x86-mingw32)
+    ruby-ogginfo (0.6.5)
     texplay (0.3.5-x86-mingw32)
       gosu (>= 0.7.25)
     texplay (0.4.2)
@@ -27,4 +28,5 @@ DEPENDENCIES
   chingu (~> 0.9rc7)
   fidgit (~> 0.1.9)
   gosu (~> 0.7.38)
+  ruby-ogginfo (~> 0.6.5)
   texplay (~> 0.3)
