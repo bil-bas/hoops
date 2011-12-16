@@ -4,8 +4,8 @@ module Hoops
 
     BACKGROUND_COLOR = Color.rgb(26, 114, 179)
 
-    SONG_VOLUME_FULL = 0.25
-    SONG_VOLUME_MUTED = 0.05
+    DEFAULT_VOLUME = 0.25
+    SONG_VOLUME_MUTED = 0.20 # 1/5 fof normal volume when muted
 
     TIME_BAR_THICKNESS = 3
     TIME_COLOR = Color.rgb(0, 80, 140)
@@ -48,8 +48,11 @@ module Hoops
 
       log.info { "Playing track '#{track[:name]}' from '#{@track[:file]}' for #{@track[:duration]} (#{@track_duration}ms)" }
 
+      @volume_full = track[:volume] || DEFAULT_VOLUME
+      @volume_muted = @volume_full * SONG_VOLUME_MUTED
+
       @song = Song[@track[:file]]
-      @song.volume = SONG_VOLUME_FULL
+      @song.volume = @volume_full
       @song.pause
     end
 
@@ -66,8 +69,8 @@ module Hoops
     end
 
     def mute_song(duration)
-      @song.volume = SONG_VOLUME_MUTED
-      after(duration, name: :unmute) { @song.volume = SONG_VOLUME_FULL }
+      @song.volume = @volume_muted
+      after(duration, name: :unmute) { @song.volume = @volume_full }
     end
 
     def draw

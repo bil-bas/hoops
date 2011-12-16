@@ -86,12 +86,12 @@ module Hoops
           @tracks = []
           game_tracks = Dir[File.join(EXTRACT_PATH, "media", "music", "*.ogg")]
           game_tracks.each do |track_file|
-            track_file = File.basename track_file
-            track_file =~ /^(.*) @(\d+)_(\d+).ogg$/
-            @tracks << { name: $1, file: track_file, duration: "#{$2}:#{$3}" }
+            if File.basename(track_file) =~ /^(.*) (\d+)@(\d+)_(\d+).ogg$/
+              @tracks << { name: $1, file: track_file, volume: ($2.to_f / 100), duration: "#{$3}:#{$4}" }
+            end
           end
 
-          @tracks += Settings.new(PLAYLIST_CONFIG_FILE)[:tracks]
+          @tracks += Settings.new(PLAYLIST_CONFIG_FILE)[:tracks].select {|t| File.exists? t[:file] }
 
           selected_track_index = rand(@tracks.size)
           @track_choice = combo_box enabled: (not settings[:playlist, :random]) do
