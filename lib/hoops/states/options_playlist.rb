@@ -56,8 +56,8 @@ module Hoops
       @playlist.each do |track|
         name = track.name
         name = "#{track.name[0...(MAX_FILE_NAME_LENGTH - 3)]}..." if track.name.length > MAX_FILE_NAME_LENGTH
-        @track_grid.label name, font_size: 20, tip: track.file, width: $window.width - 250
-        @track_grid.label "(#{track.duration_string})", font_size: 20
+        @track_grid.label name, font_size: 20, tip: track.file, width: $window.width - 250, color: track.user? ? Color::WHITE : Color::GRAY
+        @track_grid.label "(#{track.duration_string})", font_size: 20, color: track.user? ? Color::WHITE : Color::GRAY
 
         # Can only delete tracks we've added manually.
         if track.user?
@@ -66,7 +66,7 @@ module Hoops
             populate_track_grid
           end
         else
-          @track_grid.label "System"
+          @track_grid.label ""
         end
       end
     end

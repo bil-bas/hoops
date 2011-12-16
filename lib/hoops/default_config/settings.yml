@@ -9,3 +9,4 @@
 :playlist:
   :track:
   :random: false
+  :max_length: .Inf

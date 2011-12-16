@@ -10,14 +10,14 @@ module Hoops
 
     PLAYER_Y = 24
 
-    def initialize(settings1, settings2, track)
+    def initialize(settings1, settings2, track, max_length)
       super()
 
       @track = track
 
       middle = (($window.retro_width - 1) / 2.0)
 
-      @parameters = [settings1, settings2, track]
+      @parameters = [settings1, settings2, track, max_length]
 
       @player1 = Player.create(0, settings1, x: middle - 8, y: PLAYER_Y) unless settings1.nil?
       @player2 = Player.create(1, settings2, x: middle + 8, y: PLAYER_Y)  unless settings2.nil?
@@ -40,7 +40,7 @@ module Hoops
 
       on_input(:escape) { pop_game_state }
 
-      @track_duration_ms = @track.duration * 1000.0
+      @track_duration_ms = [@track.duration, max_length].min * 1000.0
       @game_duration = 0
 
       log.info { "Playing track '#{@track.name}' from '#{@track.file}' for #{@track.duration_string}" }

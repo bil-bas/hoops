@@ -76,8 +76,20 @@ module Hoops
         label "Track:", width: 100
 
         vertical do
-          @track_random = toggle_button "Random", value: settings[:playlist, :random] do |sender, value|
-             @track_choice.enabled = (not value)
+          horizontal padding: 0, spacing: 50 do
+            @track_random = toggle_button "Randomize", value: settings[:playlist, :random] do |sender, value|
+               @track_choice.enabled = (not value)
+            end
+
+            horizontal padding: 0 do
+              label "Limit track length to: "
+              @track_max_length = combo_box do
+                (30..600).step(30) {|duration| item ("%2d:%02d" % duration.divmod(60)), duration }
+                item "Unlimited", Float::INFINITY
+              end
+            end
+
+            @track_max_length.value = settings[:playlist, :max_length]
           end
 
           # The tracklist is both the ones that come with the game and any added by the user.
@@ -101,17 +113,18 @@ module Hoops
           # Save difficulty settings
           2.times do |number|
             settings[:playing, number] = @players_selected.value[number]
-            settings[:difficulty, number] = @difficulty[number].value
+            settings[:difficulty, number] = @difficulty[number].value if settings[:playing, number]
           end
 
           # Save track settings.
           track = @track_random.value ? @tracks.sample : @tracks[@track_choice.value]
           settings[:playlist, :random] = @track_random.value
           settings[:playlist, :track] = track.file unless @track_random.value
+          settings[:playlist, :max_length] = @track_max_length.value
 
           settings_1 = settings[:playing, 0] ? DIFFICULTY_SETTINGS[@difficulty[0].value] : nil
           settings_2 = settings[:playing, 1] ? DIFFICULTY_SETTINGS[@difficulty[1].value] : nil
-          push_game_state Play.new(settings_1, settings_2, track)
+          push_game_state Play.new(settings_1, settings_2, track, settings[:playlist, :max_length])
         end
 
         button("Cancel", @button_options.merge(width: 70, align_v: :bottom)) { pop_game_state }
