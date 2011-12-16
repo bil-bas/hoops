@@ -4,7 +4,7 @@ require_relative "../objects/spinning_hoop"
 
 module Hoops
   class Menu < Gui
-    BACKGROUND_COLOR = Color.rgb(50, 50, 100)
+
     TITLE_COLOR = Color.rgb(50, 120, 255)
     def initialize
       super
@@ -40,9 +40,8 @@ module Hoops
 
 
     def draw
-      $window.pixel.draw(0, 0, ZOrder::BACKGROUND, $window.width, $window.height, BACKGROUND_COLOR)
-      @hoops.each(&:draw)
       super
+      @hoops.each(&:draw)
     end
 
     def update

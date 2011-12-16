@@ -36,9 +36,8 @@ module Hoops
     end
 
     def draw
-      previous_game_state.draw
-
       super
+      previous_game_state.draw
     end
   end
 end

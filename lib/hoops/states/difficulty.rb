@@ -132,10 +132,5 @@ module Hoops
         button("Cancel", @button_options.merge(width: 70, align_v: :bottom)) { pop_game_state }
       end
     end
-
-    def draw
-      $window.pixel.draw(0, 0, ZOrder::BACKGROUND, $window.width, $window.height, Menu::BACKGROUND_COLOR)
-      super
-    end
   end
 end

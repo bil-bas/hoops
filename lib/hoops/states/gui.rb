@@ -1,5 +1,7 @@
 module Hoops
   class Gui < Fidgit::GuiState
+    BACKGROUND_COLOR = Color.rgb(50, 50, 100)
+
     def initialize
       super
 
@@ -8,7 +10,10 @@ module Hoops
     end
 
     def draw
-      $window.scale(1.0 / $window.sprite_scale) { super }
+      $window.scale(1.0 / $window.sprite_scale) do
+        $window.pixel.draw(0, 0, ZOrder::BACKGROUND, $window.width, $window.height, BACKGROUND_COLOR)
+        super
+      end
     end
   end
 end
