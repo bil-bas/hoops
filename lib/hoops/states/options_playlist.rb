@@ -7,7 +7,7 @@ module Hoops
 
       @button_options = { font_size: 32, justify: :center, width: 175 }
 
-      vertical spacing: 30, padding: 20 do
+      vertical spacing: 20, padding: 20 do
         label "Tracklist"
         track_list
         buttons
@@ -34,7 +34,7 @@ module Hoops
     def track_list
       @playlist = Tracklist.new
 
-      scroll_window width: $window.width - 40, height: $window.height * 0.6 do
+      scroll_window width: $window.width - 40, height: $window.height * 0.75 do
         @track_grid = grid num_columns: 3, spacing: 8
         populate_track_grid
       end
