@@ -61,6 +61,7 @@ h2. Third party assets used
 
 h3. Songs
 
+* 'Das Leben Wert' by "KanonBaum (Brian Peppers)":http://polyhedricpeppers.weebly.com/insufficient-ram.html -> "CC BY-SA":http://creativecommons.org/licenses/by-sa/3.0/
 * 'Thrifty Thrive' by "KanonBaum (Brian Peppers)":http://polyhedricpeppers.weebly.com/insufficient-ram.html -> "CC BY-SA":http://creativecommons.org/licenses/by-sa/3.0/
 * "'Simply dance'":http://www.jamendo.com/en/track/751875 by Libra (from 'Girlfriend Experience') -> "CC BY-NC-ND":http://creativecommons.org/licenses/by-nc-nd/3.0/
 * "'Mentats (Edit)'":http://www.jamendo.com/en/track/753730 by Schematic Wizard (from 'Schematic Wizard') -> "CC BY-SA":http://creativecommons.org/licenses/by-sa/3.0/

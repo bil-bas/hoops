@@ -1,7 +1,7 @@
 === CHANGELOG ===
 
 v1.1.0 (unreleased)
-  * Added new track from KanonBaum (Brian Peppers).
+  * Added two new tracks from KanonBaum (Brian Peppers).
   * Read track length from .ogg file (yeah, asking the user to enter it manually was dumb!).
   * Prevented user from adding original Hoops tracks again to the game.
 
