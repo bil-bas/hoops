@@ -82,7 +82,7 @@ module Hoops
             end
 
             horizontal padding: 0 do
-              label "Limit track length to: "
+              label "Limit game length to: ", tip: "Games will last as long as the selected track, unless an upper limit has been set"
               @track_max_length = combo_box do
                 (30..600).step(30) {|duration| item ("%2d:%02d" % duration.divmod(60)), duration }
                 item "Unlimited", Float::INFINITY
