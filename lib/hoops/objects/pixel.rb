@@ -1,3 +1,5 @@
+require_relative "base_object"
+
 module Hoops
   class Pixel < BaseObject
     def initialize(options = {})

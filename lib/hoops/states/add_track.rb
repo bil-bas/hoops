@@ -1,3 +1,5 @@
+require_relative "gui"
+
 module Hoops
   # Add a track to the list of user-defined tracks used by the game.
   class AddTrack < Gui

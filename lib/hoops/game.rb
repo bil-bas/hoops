@@ -26,7 +26,27 @@ SCHEMA_FILE = File.join(EXTRACT_PATH, 'lib', 'hoops', 'schema.yml')
 include Gosu
 include Chingu
 
-RequireAll.require_all File.dirname(__FILE__)
+def require_folder(path, files)
+  files.each do |file|
+    if path.empty?
+      require_relative file
+    else
+      require_relative File.join(path, file)
+    end
+  end
+end
+
+require_relative "log"
+
+require_folder "gosu_ext", %w[color]
+require_folder "texplay_ext", %w[image]
+require_folder "chingu_ext", %w[animation game_object_list game_state sample song]
+require_folder "fidgit_ext", %w[element]
+
+require_folder "ogginfo_ext", %w[ogg]
+
+require_folder "", %w[settings tracklist version]
+require_folder "states", %w[add_track difficulty game_over menu options_playlist play]
 
 Gosu::Sample.volume = 0.5
 

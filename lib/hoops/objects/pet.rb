@@ -1,3 +1,6 @@
+require_relative "physics_object"
+require_relative "pixel"
+
 module Hoops
   class Pet < PhysicsObject
     WALK_ANIMATION_FRAMES = 0..3 # Walking on the hoop or away.

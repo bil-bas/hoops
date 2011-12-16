@@ -1,3 +1,5 @@
+require_relative "physics_object"
+
 module Hoops
   class Ash < PhysicsObject
     def initialize(options = {})

@@ -1,3 +1,5 @@
+require_relative "pet"
+
 module Hoops
   class Cat < Pet
     def initialize(command, options = {})

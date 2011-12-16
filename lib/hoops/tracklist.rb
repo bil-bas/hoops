@@ -1,5 +1,7 @@
 require 'forwardable'
 
+require_relative "track"
+
 module Hoops
   class Tracklist
     extend Forwardable

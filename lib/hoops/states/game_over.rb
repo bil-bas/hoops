@@ -1,3 +1,5 @@
+require_relative "gui"
+
 module Hoops
   class GameOver < Gui
     TEXT_COLOR = Color.rgba(255, 255, 255, 180)

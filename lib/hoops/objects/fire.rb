@@ -1,3 +1,5 @@
+require_relative "base_object"
+
 module Hoops
   class Fire < BaseObject
     def initialize(options = {})

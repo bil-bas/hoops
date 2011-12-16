@@ -1,3 +1,5 @@
+require_relative "base_object"
+
 module Hoops
   class PhysicsObject < BaseObject
     GRAVITY = -5 / 1000.0 # Acceleration per second.

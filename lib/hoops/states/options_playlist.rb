@@ -1,3 +1,5 @@
+require_relative "gui"
+
 module Hoops
   class OptionsPlaylist < Gui
     MAX_FILE_NAME_LENGTH = 50

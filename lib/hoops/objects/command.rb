@@ -1,3 +1,7 @@
+require_relative "physics_object"
+
+# Actually a hoop :)
+
 module Hoops
   class Command < PhysicsObject
     DIRECTIONS = [:up, :down, :left, :right]

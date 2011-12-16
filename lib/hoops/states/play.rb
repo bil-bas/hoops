@@ -1,3 +1,6 @@
+require_folder "objects", %w[cat direction fire player]
+
+
 module Hoops
   class Play < GameState
     trait :timer

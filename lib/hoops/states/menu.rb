@@ -1,3 +1,7 @@
+require_relative "gui"
+
+require_relative "../objects/spinning_hoop"
+
 module Hoops
   class Menu < Gui
     BACKGROUND_COLOR = Color.rgb(50, 50, 100)

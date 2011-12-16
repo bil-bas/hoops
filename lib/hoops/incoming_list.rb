@@ -1,3 +1,5 @@
+require_folder "objects", %w[ash cat word command pixel]
+
 module Hoops
   # List of incoming creatures.
   class IncomingList < GameObject

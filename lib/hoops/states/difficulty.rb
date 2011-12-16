@@ -1,3 +1,5 @@
+require_relative "gui"
+
 module Hoops
   class Difficulty < Gui
     PLAYER_NAMES = ["Meow", "Star"]

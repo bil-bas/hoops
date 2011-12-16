@@ -1,3 +1,6 @@
+require_relative "base_object"
+require_relative "../incoming_list"
+
 module Hoops
   class Player < BaseObject
     MAX_MULTIPLIER = 20
