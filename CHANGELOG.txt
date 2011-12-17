@@ -1,9 +1,11 @@
 === CHANGELOG ===
 
 v1.1.0 (unreleased)
+
   * Added two new tracks from KanonBaum (Brian Peppers).
+  * Can now choose length of game (30s, 60s, 90s, etc), rather than being limited to the track length.
   * Read track length from .ogg file (yeah, asking the user to enter it manually was dumb!).
-  * Prevented user from adding original Hoops tracks again to the game.
+  * Prevented user from adding multiple copies of the same track to their tracklist.
 
 v1.0.0 (2011-12-10)
 
