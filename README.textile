@@ -35,7 +35,7 @@ h3. OS X and Linux (or Windows from source)
 h4. Using Bundler to install gems
 
 <pre>
-    bundle install
+    bundle install --without development test
 </pre>
 
     If the Bundler gem isn't already installed, that can be installed with:
