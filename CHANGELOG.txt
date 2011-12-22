@@ -1,6 +1,6 @@
 === CHANGELOG ===
 
-v1.1.0 (unreleased)
+v1.1.0 (2011-12-22)
 
   * Added two new tracks from KanonBaum (Brian Peppers).
   * Can now choose length of game (30s, 60s, 90s, etc), rather than being limited to the track length.
