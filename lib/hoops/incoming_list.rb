@@ -14,9 +14,13 @@ module Hoops
 
     HIT_SCORE = 1000
 
+    SPEED = 0.02
+    BASE_INTERVAL = 500
+
     PERFECT_MULTIPLIER = 2
 
     PET_CLASSES = [Cat]
+    PET_CHANCE = 0.1
 
     def direction_valid?(direction); @valid_directions.include? direction end
 
@@ -33,7 +37,7 @@ module Hoops
       @direction_icons = {}
 
       @valid_directions = Command::DIRECTIONS.dup
-      @valid_directions.delete @difficulty_settings[:disabled_direction]
+      @valid_directions.delete :up if @difficulty_settings[:num_directions] < 4
 
       Command::Y_POSITIONS.each_pair do |direction, direction_y|
         next unless direction_valid? direction
@@ -42,10 +46,10 @@ module Hoops
       end
 
       if @player.number == 1
-        @speed = -@difficulty_settings[:speed]
+        @speed = -SPEED
         @create_x = $window.retro_width - 1 + 5
       else
-        @speed = @difficulty_settings[:speed]
+        @speed = SPEED
         @create_x = -5
       end
 
@@ -53,7 +57,9 @@ module Hoops
       @hit_range = (@player.x - HIT_RANGE / 2)..(@player.x + HIT_RANGE / 2)
       @perfect_range = (@player.x - PERFECT_RANGE / 2)..(@player.x + PERFECT_RANGE / 2)
 
-      every(@difficulty_settings[:interval]) { new_command }
+      @num_since_gap = 0
+
+      every(BASE_INTERVAL) { new_command }
     end
 
 
@@ -115,22 +121,31 @@ module Hoops
     end
 
     protected
+    # Layout of hoops and gaps based on difficulty.
+    # Easy    O.O.O.O.O.O.O.O.
+    # Normal  O.O.O.O.O.O.O.O.
+    # Hard    OOO.OOO.OOO.OOO.
+    # Awesome OOOOOOO.OOOOOOO.
     def new_command
-      return if @randomizer.rand < @difficulty_settings[:gap_chance]
+      # Generate all random numbers, even if they may not be used. This keeps the generator state constant.
+      direction = Command::DIRECTIONS[@randomizer.rand Command::DIRECTIONS.size]
+      valid_direction = @valid_directions.include? direction
 
-      direction = @valid_directions[@randomizer.rand @valid_directions.size]
-      command = Command.create(x: @create_x, direction: direction, factor_x: @create_x < 0 ? -1 : 1)
+      pet_type = PET_CLASSES[@randomizer.rand PET_CLASSES.size]
+      pet_appears = @randomizer.rand < PET_CHANCE
 
-      if @randomizer.rand < @difficulty_settings[:pet_chance]
-        PET_CLASSES[@randomizer.rand PET_CLASSES.size].create(command)
-      end
+      gap_needed = @num_since_gap == @difficulty_settings[:bar_length]
 
-      @list << command
+      if gap_needed
+        @num_since_gap = 0
+      else
+        if valid_direction
+          command = Command.create x: @create_x, direction: direction, factor_x: @create_x < 0 ? -1 : 1
+          pet_type.create command if pet_appears
+          @list << command
+        end
 
-      if @randomizer.rand < @difficulty_settings[:double_chance]
-        directions = @valid_directions - [command.direction]
-        direction = directions[@randomizer.rand directions.size]
-        @list << Command.create(x: @create_x, direction: direction, factor_x: @create_x < 0 ? -1 : 1)
+        @num_since_gap += 1
       end
     end
   end

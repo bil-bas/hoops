@@ -70,6 +70,7 @@ module Hoops
 
     def mute_song(duration)
       @song.volume = @volume_muted
+      stop_timer :unmute
       after(duration, name: :unmute) { @song.volume = @volume_full }
     end
 

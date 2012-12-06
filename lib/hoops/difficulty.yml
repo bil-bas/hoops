@@ -1,40 +1,24 @@
 ---
 :easy:
   :name: Easy
-  :interval: 1300
-  :speed: 0.015
   :multiplier: 0.5
-  :pet_chance: 0.1
-  :double_chance: 0
-  :gap_chance: 0.2
-  :disabled_direction: :up
+  :bar_length: 1
+  :num_directions: 3
 
 :normal:
   :name: Normal
-  :interval: 1000
-  :speed: 0.02
   :multiplier: 1
-  :pet_chance: 0.08
-  :double_chance: 0
-  :gap_chance: 0.1
-  :disabled_direction: nil
+  :bar_length: 1
+  :num_directions: 4
 
 :hard:
   :name: Hard
-  :interval: 700
-  :speed: 0.025
   :multiplier: 2
-  :pet_chance: 0.06
-  :double_chance: 0
-  :gap_chance: 0.1
-  :disabled_direction: nil
+  :bar_length: 3
+  :num_directions: 4
 
 :awesome:
   :name: Awesome
-  :interval: 400
-  :speed: 0.03
   :multiplier: 3
-  :pet_chance: 0.05
-  :double_chance: 0
-  :gap_chance: 0.1
-  :disabled_direction: nil
+  :bar_length: 7
+  :num_directions: 4
