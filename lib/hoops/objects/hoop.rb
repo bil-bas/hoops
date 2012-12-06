@@ -21,6 +21,8 @@ module Hoops
         right: Color.rgb(255, 0, 255), # Magenta
     }
 
+    PERSISTENT_FRAMES = 25
+
     attr_reader :direction, :contents
 
     def contents=(object); @contents = object; end
@@ -29,7 +31,7 @@ module Hoops
       options = {
           z: 5,
           velocity_z: 0.7,
-          elasticity: 0.85
+          elasticity: 0.9
       }.merge! options
 
       @contents = nil
@@ -44,11 +46,40 @@ module Hoops
 
       self.image = @animation.frames[0]
       self.color = COLORS[@direction]
+      @positions = []
     end
 
     def update
       super
       self.image = @animation.next
+    end
+
+    def draw
+      color = self.color.dup
+
+      # Draw a blurry glow behind the moving hoops.
+      @positions.each.with_index do |(x, y, z), i|
+        next if i == 0
+
+        # Different colours need different alphas to appear equally bright.
+        color.alpha = case direction
+                        when :up
+                          15 - i / 2
+                        when :down, :left
+                          6 - i / 5
+                        when :right
+                          10 - i / 3
+                      end
+
+        @image.draw_rot x, y - z, y, 0, 0.5, 1.0, 1, 1, color, :add
+      end
+
+      # Store the last number of frames.
+      @positions.unshift [x, y, z]
+      # Trim excess frames.
+      @positions.pop while @positions.size > PERSISTENT_FRAMES
+
+      super
     end
 
     def performed(player)
