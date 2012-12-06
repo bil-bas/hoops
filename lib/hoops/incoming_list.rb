@@ -18,6 +18,8 @@ module Hoops
 
     PET_CLASSES = [Cat]
 
+    def direction_valid?(direction); @valid_directions.include? direction end
+
     def initialize(player, song_name, options = {})
       super(options)
 
@@ -30,7 +32,12 @@ module Hoops
       @list = []
       @direction_icons = {}
 
+      @valid_directions = Command::DIRECTIONS.dup
+      @valid_directions.delete @difficulty_settings[:disabled_direction]
+
       Command::Y_POSITIONS.each_pair do |direction, direction_y|
+        next unless direction_valid? direction
+
         @direction_icons[direction] = Direction.create(@player, direction, x: @player.x, y: direction_y)
       end
 
@@ -74,6 +81,8 @@ module Hoops
 
     public
     def command_performed(direction)
+      return unless direction_valid? direction
+
       command = @list[0..3].find {|c| c.direction == direction }
       if command
         if @hit_range.include? command.x
@@ -109,7 +118,7 @@ module Hoops
     def new_command
       return if @randomizer.rand < @difficulty_settings[:gap_chance]
 
-      direction = Command::DIRECTIONS[@randomizer.rand Command::DIRECTIONS.size]
+      direction = @valid_directions[@randomizer.rand @valid_directions.size]
       command = Command.create(x: @create_x, direction: direction, factor_x: @create_x < 0 ? -1 : 1)
 
       if @randomizer.rand < @difficulty_settings[:pet_chance]
@@ -119,7 +128,7 @@ module Hoops
       @list << command
 
       if @randomizer.rand < @difficulty_settings[:double_chance]
-        directions = Command::DIRECTIONS - [command.direction]
+        directions = @valid_directions - [command.direction]
         direction = directions[@randomizer.rand directions.size]
         @list << Command.create(x: @create_x, direction: direction, factor_x: @create_x < 0 ? -1 : 1)
       end

@@ -7,6 +7,7 @@
   :pet_chance: 0.1
   :double_chance: 0
   :gap_chance: 0.2
+  :disabled_direction: :up
 
 :normal:
   :name: Normal
@@ -16,6 +17,7 @@
   :pet_chance: 0.08
   :double_chance: 0
   :gap_chance: 0.1
+  :disabled_direction: nil
 
 :hard:
   :name: Hard
@@ -25,6 +27,7 @@
   :pet_chance: 0.06
   :double_chance: 0
   :gap_chance: 0.1
+  :disabled_direction: nil
 
 :awesome:
   :name: Awesome
@@ -34,3 +37,4 @@
   :pet_chance: 0.05
   :double_chance: 0
   :gap_chance: 0.1
+  :disabled_direction: nil
