@@ -12,12 +12,12 @@ module Hoops
     def initialize(player, name, options = {})
       @player, @name = player, name
 
-      @default_color = Command::COLORS[name].dup
+      @default_color = Hoop::COLORS[name].dup
       @default_color.red /= 4
       @default_color.blue /= 4
       @default_color.green /= 4
 
-      @miss_color = Command::COLORS[name].dup
+      @miss_color = Hoop::COLORS[name].dup
       @miss_color.red /= 2
       @miss_color.blue /= 2
       @miss_color.green /= 2
@@ -51,13 +51,13 @@ module Hoops
     end
 
     def hit
-      flash(Command::COLORS[name].dup, HIT_FLASH_DURATION)
+      flash(Hoop::COLORS[name].dup, HIT_FLASH_DURATION)
       @player.increment_multiplier
       #@hit_sample.play(0.5)
     end
 
     def perfect_hit
-      flash(Command::COLORS[name].dup, PERFECT_HIT_FLASH_DURATION)
+      flash(Hoop::COLORS[name].dup, PERFECT_HIT_FLASH_DURATION)
       @player.increment_multiplier
       #@hit_sample.play(0.8)
     end

@@ -34,7 +34,7 @@ module Hoops
 
       @time_font = Font["pixelated.ttf", 24]
 
-      Command::Y_POSITIONS.each_value do |y|
+      Hoop::Y_POSITIONS.each_value do |y|
         Fire.create(x: $window.retro_width / 2, y: y) if settings1
         Fire.create(x: $window.retro_width / 2, y: y + 3.5) if settings2
       end

@@ -3,7 +3,7 @@ require_relative "physics_object"
 # Actually a hoop :)
 
 module Hoops
-  class Command < PhysicsObject
+  class Hoop < PhysicsObject
     DIRECTIONS = [:up, :down, :left, :right]
     Y_POSITIONS = {
         up: 31,
