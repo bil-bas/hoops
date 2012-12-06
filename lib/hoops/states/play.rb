@@ -1,4 +1,4 @@
-require_folder "objects", %w[cat direction fire player]
+require_folder "objects", %w[direction fire player]
 
 
 module Hoops

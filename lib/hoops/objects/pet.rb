@@ -8,30 +8,33 @@ module Hoops
 
     DANCE_ANIMATION_FRAMES = 4..7 # Dancing next to the player.
     DANCE_ANIMATION_DELAY = 250
+    VARIATIONS = [:cat_1, :cat_2, :monkey_1]
 
-    def initialize(command, animations, options = {})
+    def initialize(hoop, options = {})
       options = {
           elasticity: 0.4,
           state: :walking,
       }.merge! options
 
+      @type = VARIATIONS.sample
+
       super options
 
-      @command = command
-      @command.contents = self
-      self.x = @command.x
-      self.y = @command.y
-      self.z = @command.z + @command.height
+      @hoop = hoop
+      @hoop.contents = self
+      self.x = @hoop.x
+      self.y = @hoop.y
+      self.z = @hoop.z + @hoop.height
       self.factor_x = -1 if x > 0
 
-      @animations = Animation.new(file: animations)
+      @animations = Animation.new(file: "pet_#{@type}_16x16.png")
       self.state = options[:state]
     end
 
     def update
-      if @command
-        self.x = @command.x
-        self.z = @command.z + @command.height
+      if @hoop
+        self.x = @hoop.x
+        self.z = @hoop.z + @hoop.height
       else
         super
       end
@@ -65,7 +68,7 @@ module Hoops
     end
 
     def command_performed(player)
-      @command = nil
+      @hoop = nil
       explode(Pixel)
       self.state = :dancing
       @player = player

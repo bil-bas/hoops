@@ -1,4 +1,4 @@
-require_folder "objects", %w[ash cat word hoop pixel]
+require_folder "objects", %w[ash pet word hoop pixel]
 
 module Hoops
   # List of incoming creatures.
@@ -19,7 +19,6 @@ module Hoops
 
     PERFECT_MULTIPLIER = 2
 
-    PET_CLASSES = [Cat]
     PET_CHANCE = 0.1
 
     def disable; stop_timer :create_hoops end
@@ -132,7 +131,6 @@ module Hoops
       direction = Hoop::DIRECTIONS[@randomizer.rand Hoop::DIRECTIONS.size]
       valid_direction = @valid_directions.include? direction
 
-      pet_type = PET_CLASSES[@randomizer.rand PET_CLASSES.size]
       pet_appears = @randomizer.rand < PET_CHANCE
 
       gap_needed = @num_since_gap == @difficulty_settings[:bar_length]
@@ -142,7 +140,7 @@ module Hoops
       else
         if valid_direction
           hoop = Hoop.create x: @create_x, direction: direction, factor_x: @create_x < 0 ? -1 : 1
-          pet_type.create hoop if pet_appears
+          Pet.create hoop if pet_appears
           @list << hoop
         end
 
