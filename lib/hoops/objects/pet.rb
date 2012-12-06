@@ -8,7 +8,8 @@ module Hoops
 
     DANCE_ANIMATION_FRAMES = 4..7 # Dancing next to the player.
     DANCE_ANIMATION_DELAY = 250
-    VARIATIONS = [:cat_1, :cat_2, :monkey_1, :sheep_1]
+
+    TYPES = [:cat_1, :cat_2, :fish_1, :monkey_1, :sheep_1]
 
     def initialize(hoop, options = {})
       options = {
@@ -16,9 +17,9 @@ module Hoops
           state: :walking,
       }.merge! options
 
-      @type = VARIATIONS.sample
-
       super options
+
+      @type = TYPES.sample
 
       @hoop = hoop
       @hoop.contents = self
@@ -27,7 +28,7 @@ module Hoops
       self.z = @hoop.z + @hoop.height
       self.factor_x = -1 if x > 0
 
-      @animations = Animation.new(file: "pet_#{@type}_16x16.png")
+      @animations = Animation.new file: "pet_#{@type}_16x16.png"
       self.state = options[:state]
     end
 

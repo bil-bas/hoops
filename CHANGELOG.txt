@@ -4,6 +4,7 @@ v1.2.0 (unreleased)
 
   * Changed hoop generation to be dependent on the current track's file name.
   * Updated to use latest versions of gems.
+  * Added fish, monkey and sheep pets.
 
 v1.1.0 (2011-12-22)
 
