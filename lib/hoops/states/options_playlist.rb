@@ -44,8 +44,8 @@ module Hoops
 
     def buttons
       horizontal spacing: 20 do
-        button("Back", @button_options) { pop_game_state }
-        button "Add track...", @button_options.merge(tip: "Add a track from your computer to use in the game") do
+        button("Back", @button_options.merge(shortcut: :b)) { pop_game_state }
+        button "Add track...", @button_options.merge(tip: "Add a track from your computer to use in the game", shortcut: :a) do
           @add_track = AddTrack.new
           push_game_state @add_track
         end

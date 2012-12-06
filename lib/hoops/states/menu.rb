@@ -9,12 +9,6 @@ module Hoops
     def initialize
       super
 
-      add_inputs(
-          p: :play,
-          e: :close,
-          escape: :close
-      )
-
       Log.level = settings[:debug_mode] ? Logger::DEBUG : Logger::INFO
 
       vertical align_h: :center, spacing: 10, padding: 15 do
@@ -26,12 +20,13 @@ module Hoops
 
         vertical align_h: :center, spacing: 12, padding: 0, padding_top: 10 do
           options = { width: 225, font_height: 30, justify: :center }
-          button("Play", options.merge(tip: 'Both players on the same keyboard')) { play }
-          button("User tracks", options.merge(tip: "Add or remove .ogg music tracks to the playlist")) { push_game_state OptionsPlaylist }
+          button("Play", options.merge(tip: 'Both players on the same keyboard', shortcut: :p)) { play }
+          button("User tracks", options.merge(tip: "Add or remove .ogg music tracks to the playlist", shortcut: :t)) { push_game_state OptionsPlaylist }
           #button("About", options.merge(enabled: false))
-          button("Exit", options) { close }
+          button("Exit", options.merge(shortcut: :x)) { close }
         end
       end
+
       @hoops = []
       (10..90).step(12) do |x|
         @hoops << SpinningHoop.new(x: x, y: 56, color: Color.rgb(rand(255), rand(255), rand(255)))

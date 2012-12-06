@@ -2,7 +2,7 @@ require_relative "gui"
 
 module Hoops
   class Difficulty < Gui
-    PLAYER_NAMES = ["Meow", "Star"]
+    PLAYER_NAMES = %w[Meow Star]
 
     DIFFICULTY_FILE = File.join(EXTRACT_PATH, 'lib', 'hoops', 'difficulty.yml')
     DIFFICULTY_SETTINGS = YAML.load(File.read(DIFFICULTY_FILE))
@@ -111,7 +111,7 @@ module Hoops
 
     def buttons
       vertical spacing: 0, padding: 0, width: @container.width do
-        button("Dance!!!", @button_options.merge(align: :center, font_height: 70, width: 300)) do
+        button("Dance!!!", @button_options.merge(align: :center, font_height: 70, width: 300, shortcut: :d)) do
           # Save difficulty settings
           2.times do |number|
             settings[:playing, number] = @players_selected.value[number]
@@ -129,7 +129,7 @@ module Hoops
           push_game_state Play.new(settings_1, settings_2, track, settings[:playlist, :max_length])
         end
 
-        button("Cancel", @button_options.merge(width: 70, align_v: :bottom)) { pop_game_state }
+        button("Cancel", @button_options.merge(width: 70, align_v: :bottom, shortcut: :c)) { pop_game_state }
       end
     end
   end
