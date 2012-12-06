@@ -6,7 +6,7 @@ module Gosu
 
       def [](file)
         song = old_indexer(file)
-        song ? song : new($window, file)
+        song ? song : new(file)
       end
     end
   end

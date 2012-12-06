@@ -9,7 +9,7 @@ module Hoops
 
     PLAYLIST_CONFIG_FILE = "playlist.yml"
 
-    def_delegators :@tracks, :[], :each, :size
+    def_delegators :@tracks, :[], :each, :size, :sample
 
     def remove(track)
       @tracks.delete track
