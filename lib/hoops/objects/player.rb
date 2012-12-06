@@ -9,6 +9,7 @@ module Hoops
     PET_OFFSET = 15
 
     attr_reader :number, :difficulty_settings, :score
+    def disable_hoops; @incoming.disable end
 
     def initialize(number, song_file, difficulty_settings, options = {})
       options = {
@@ -38,6 +39,8 @@ module Hoops
       [:left, :right, :up, :down].each do |direction|
         on_input(@@keys_config[:players, @number + 1, direction], direction)
       end
+
+      @hoops_disabled = false
 
       @score_x = (@number == 1) ? $window.width - SCORE_INDENT : SCORE_INDENT
       @score_align = (@number == 1) ? 1 : 0

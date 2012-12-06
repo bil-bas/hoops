@@ -12,6 +12,7 @@ module Hoops
     TIME_COLOR = Color.rgb(0, 80, 140)
 
     PLAYER_Y = 24
+    LAST_HOOP_TIME = 3500 # Stop spitting out hoops at the end of the song.
 
     def initialize(settings1, settings2, track, max_length)
       super()
@@ -94,6 +95,10 @@ module Hoops
       remaining_time = @track_duration_ms - @game_duration
       if @song.playing? and remaining_time > 0
         @game_duration = [@game_duration + frame_time, @track_duration_ms].min
+        if remaining_time < LAST_HOOP_TIME
+          @player1.disable_hoops if @player1
+          @player2.disable_hoops if @player2
+        end
         super
       else
         game_over

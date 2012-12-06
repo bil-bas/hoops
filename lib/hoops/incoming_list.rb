@@ -22,6 +22,7 @@ module Hoops
     PET_CLASSES = [Cat]
     PET_CHANCE = 0.1
 
+    def disable; stop_timer :create_hoops end
     def direction_valid?(direction); @valid_directions.include? direction end
 
     def initialize(player, song_name, options = {})
@@ -59,7 +60,7 @@ module Hoops
 
       @num_since_gap = 0
 
-      every(BASE_INTERVAL) { new_command }
+      every(BASE_INTERVAL, name: :create_hoops ) { new_command }
     end
 
 
