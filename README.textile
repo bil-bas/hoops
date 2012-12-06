@@ -26,11 +26,7 @@ If running the .exe, there are no other requirements. Otherwise the requirements
 
 h3. OS X and Linux (or Windows from source)
 
-* Ruby 1.9.2
-** Gosu gem 0.7.27
-** Chingu gem 0.9rc4
-** Fidgit gem 0.0.5alpha
-** Texplay gem 0.3.5
+* Ruby 1.9.2 (1.9.3 recommended)
 
 h4. Using Bundler to install gems
 
@@ -41,7 +37,7 @@ h4. Using Bundler to install gems
     If the Bundler gem isn't already installed, that can be installed with:
 
 <pre>
-    gem install bundler --no-ri --no-rdoc
+    gem install bundler
 </pre>
 
 
