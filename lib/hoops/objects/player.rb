@@ -10,7 +10,7 @@ module Hoops
 
     attr_reader :number, :difficulty_settings, :score
 
-    def initialize(number, difficulty_settings, options = {})
+    def initialize(number, song_file, difficulty_settings, options = {})
       options = {
           factor: 1.25,
       }.merge! options
@@ -28,7 +28,7 @@ module Hoops
 
       @@keys_config ||= Settings.new(KEYS_CONFIG_FILE)
 
-      @incoming = IncomingList.create(self, difficulty_settings)
+      @incoming = IncomingList.create(self, song_file, difficulty_settings)
 
       @score = 0
       @multiplier = 1

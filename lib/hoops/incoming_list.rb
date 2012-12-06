@@ -18,8 +18,12 @@ module Hoops
 
     PET_CLASSES = [Cat]
 
-    def initialize(player, options = {})
+    def initialize(player, song_name, options = {})
       super(options)
+
+      # Everything that happens is based on a random number generator seeded based on the name of the track played.
+      song_name = File.basename song_name, File.extname(song_name)
+      @randomizer = Random.new song_name.hash
 
       @player, @difficulty_settings = player, player.difficulty_settings
 
@@ -103,18 +107,20 @@ module Hoops
 
     protected
     def new_command
-      return if rand < @difficulty_settings[:gap_chance]
+      return if @randomizer.rand < @difficulty_settings[:gap_chance]
 
-      command = Command.create(x: @create_x, direction: Command::DIRECTIONS.sample, factor_x: @create_x < 0 ? -1 : 1)
+      direction = Command::DIRECTIONS[@randomizer.rand Command::DIRECTIONS.size]
+      command = Command.create(x: @create_x, direction: direction, factor_x: @create_x < 0 ? -1 : 1)
 
-      if rand < @difficulty_settings[:pet_chance]
-        PET_CLASSES.sample.create(command)
+      if @randomizer.rand < @difficulty_settings[:pet_chance]
+        PET_CLASSES[@randomizer.rand PET_CLASSES.size].create(command)
       end
 
       @list << command
 
-      if rand < @difficulty_settings[:double_chance]
-        direction = (Command::DIRECTIONS - [command.direction]).sample
+      if @randomizer.rand < @difficulty_settings[:double_chance]
+        directions = Command::DIRECTIONS - [command.direction]
+        direction = directions[@randomizer.rand directions.size]
         @list << Command.create(x: @create_x, direction: direction, factor_x: @create_x < 0 ? -1 : 1)
       end
     end
