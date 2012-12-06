@@ -8,7 +8,7 @@ module Hoops
 
     DANCE_ANIMATION_FRAMES = 4..7 # Dancing next to the player.
     DANCE_ANIMATION_DELAY = 250
-    VARIATIONS = [:cat_1, :cat_2, :monkey_1]
+    VARIATIONS = [:cat_1, :cat_2, :monkey_1, :sheep_1]
 
     def initialize(hoop, options = {})
       options = {
