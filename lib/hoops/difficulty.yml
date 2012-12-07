@@ -4,21 +4,25 @@
   :multiplier: 0.5
   :bar_length: 1
   :num_directions: 3
+  :perfect_range: 3
 
 :normal:
   :name: Normal
   :multiplier: 1
   :bar_length: 1
   :num_directions: 4
+  :perfect_range: 2.5
 
 :hard:
   :name: Hard
   :multiplier: 2
   :bar_length: 3
   :num_directions: 4
+  :perfect_range: 2
 
 :awesome:
   :name: Awesome
   :multiplier: 3
   :bar_length: 7
   :num_directions: 4
+  :perfect_range: 1.5

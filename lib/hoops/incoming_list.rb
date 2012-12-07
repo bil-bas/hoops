@@ -10,7 +10,6 @@ module Hoops
     RAIL_COLOR = Color.rgba(0, 0, 0, 50)
 
     HIT_RANGE = 10
-    PERFECT_RANGE = 2
 
     HIT_SCORE = 1000
 
@@ -55,7 +54,8 @@ module Hoops
 
       @x = @player.x
       @hit_range = (@player.x - HIT_RANGE / 2)..(@player.x + HIT_RANGE / 2)
-      @perfect_range = (@player.x - PERFECT_RANGE / 2)..(@player.x + PERFECT_RANGE / 2)
+      half_perfect_range = @difficulty_settings[:perfect_range] / 2.0
+      @perfect_range = (@player.x - half_perfect_range)..(@player.x + half_perfect_range)
 
       @num_since_gap = 0
 
