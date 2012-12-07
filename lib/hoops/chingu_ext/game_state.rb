@@ -6,17 +6,40 @@ module Chingu
     GLOW_WIDTH = 64
     MAX_FRAME_TIME = 100 # Milliseconds cap on frame calculations.
 
+    class << self
+      def settings
+        @settings ||= Hoops::Settings.new(SETTINGS_CONFIG_FILE)
+      end
+
+      def glow
+        @glow ||= begin
+          glow = TexPlay.create_image $window, GLOW_WIDTH, GLOW_WIDTH, color: :alpha
+          glow.refresh_cache
+          glow.clear color: :alpha
+
+          center = glow.width / 2.0
+          radius = glow.width / 2.0
+
+          glow.circle center, center, radius, :filled => true,
+                        :color_control => lambda {|source, dest, x, y|
+                          # Glow starts at the edge of the pixel (well, its radius, since glow is circular, not rectangular)
+                          distance = distance(center, center, x, y)
+                          dest[3] = (1 - (distance / radius)) ** 2
+                          dest
+                        }
+          glow
+        end
+      end
+    end
+
     # Settings object, containing general settings from config.
-    def settings; @@settings; end
+    def settings; self.class.settings; end
 
     alias_method :original_initialize, :initialize
     public
     def initialize(options = {})
-      @@settings ||= Hoops::Settings.new(SETTINGS_CONFIG_FILE)
       on_input(:f12) { pry } if respond_to? :pry
       original_initialize(options)
-
-      make_glow unless defined? @@glow
     end
 
     public
@@ -32,24 +55,6 @@ module Chingu
     end
 
     public
-    def glow; @@glow; end
-
-    public
-    def make_glow
-      @@glow = TexPlay.create_image($window, GLOW_WIDTH, GLOW_WIDTH, color: :alpha)
-      @@glow.refresh_cache
-      @@glow.clear color: :alpha
-
-      center = @@glow.width / 2.0
-      radius =  @@glow.width / 2.0
-
-      @@glow.circle center, center, radius, :filled => true,
-        :color_control => lambda {|source, dest, x, y|
-          # Glow starts at the edge of the pixel (well, its radius, since glow is circular, not rectangular)
-          distance = distance(center, center, x, y)
-          dest[3] = (1 - (distance / radius)) ** 2
-          dest
-        }
-    end
+    def glow; self.class.glow; end
   end
 end

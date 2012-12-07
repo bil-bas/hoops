@@ -5,6 +5,10 @@ module Hoops
   class AddTrack < Gui
     attr_reader :track
 
+    class << self
+      def current_path; @current_path ||= Dir.pwd end
+    end
+
     def initialize
       super
 
@@ -15,9 +19,7 @@ module Hoops
       vertical padding: 8 do
         label "Browse to an Ogg Vorbis music file (*.ogg)"
 
-        @@current_path ||= Dir.pwd
-
-        file_browser :open, width: $window.width - 32, margin: 0, directory: @@current_path, pattern: "*.ogg" do |sender, result, file|
+        file_browser :open, width: $window.width - 32, margin: 0, directory: self.class.current_path, pattern: "*.ogg" do |sender, result, file|
           case result
             when :open
               name = File.basename(file).tr('_', ' ')
@@ -25,7 +27,7 @@ module Hoops
 
               # Todo: Feedback if format is incorrect.
               @track = Track.new(file, user: true)
-              @@current_path = sender.directory
+              self.class.current_path = sender.directory
               pop_game_state
 
             when :cancel

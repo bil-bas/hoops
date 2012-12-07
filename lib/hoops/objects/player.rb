@@ -8,6 +8,12 @@ module Hoops
     SCORE_INDENT = 10
     PET_OFFSET = 15
 
+    class << self
+      def keys_config
+        @keys_config ||= Settings.new(KEYS_CONFIG_FILE)
+      end
+    end
+
     attr_reader :number, :difficulty_settings, :score
     def disable_hoops; @incoming.disable end
 
@@ -27,8 +33,6 @@ module Hoops
       @current_animation = @animation_sets[0]
       self.image = @animations[0]
 
-      @@keys_config ||= Settings.new(KEYS_CONFIG_FILE)
-
       @incoming = IncomingList.create(self, song_file, difficulty_settings)
 
       @score = 0
@@ -37,7 +41,7 @@ module Hoops
       @multiplier_font = Font["pixelated.ttf", 80]
 
       [:left, :right, :up, :down].each do |direction|
-        on_input(@@keys_config[:players, @number + 1, direction], direction)
+        on_input(self.class.keys_config[:players, @number + 1, direction], direction)
       end
 
       @hoops_disabled = false

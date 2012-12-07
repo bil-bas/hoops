@@ -23,6 +23,12 @@ module Hoops
 
     PERSISTENT_FRAMES = 25
 
+    class << self
+      def animation
+        @animation ||= Animation.new(file: ANIMATION_FILE, delay: 250)
+      end
+    end
+
     attr_reader :direction, :contents
 
     def contents=(object); @contents = object; end
@@ -41,8 +47,7 @@ module Hoops
 
       self.y = Y_POSITIONS[@direction]
 
-      @@animation ||= Animation.new(file: ANIMATION_FILE, delay: 250)
-      @animation = @@animation.dup
+      @animation = self.class.animation.dup
 
       self.image = @animation.frames[0]
       self.color = COLORS[@direction]

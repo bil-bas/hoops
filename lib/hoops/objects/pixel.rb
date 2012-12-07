@@ -3,9 +3,12 @@ require_relative "base_object"
 module Hoops
   class Pixel < BaseObject
     def initialize(options = {})
-      @@pixel ||= TexPlay.create_image($window, 1, 1, color: :white)
+      options = {
+         image: $window.pixel,
+      }.merge! options
+
       super options
-      self.image = @@pixel
+
       @upward_velocity = 0.3 + rand(0.15)
     end
 

@@ -52,7 +52,7 @@ module Hoops
     # Shatter the object into its component pixel fragments.
     public
     def explode(type)
-      no_color = Color.rgb(255, 255, 255)
+      no_color = Color::WHITE
 
       image.explosion.each do |color, x, y|
         effective_color = if self.color == no_color

@@ -2,15 +2,20 @@ require_relative "base_object"
 
 module Hoops
   class Word < BaseObject
+    class << self
+      def image(name)
+        @images ||= Hash.new {|h, k| h[k] = Image["word_#{name}.png"] }
+        @images[name]
+      end
+    end
+
     def initialize(name, options = {})
       options = {
 
       }.merge! options
       super options
 
-      @@images ||= {}
-      @@images[name] ||= Image["word_#{name}.png"]
-      @image = @@images[name]
+      @image = self.class.image name
 
       @upward_velocity = 0.2
     end
