@@ -3,10 +3,38 @@ require_relative "../incoming_list"
 
 module Hoops
   class Player < BaseObject
-    MAX_MULTIPLIER = 20
+    trait :timer
+
     KEYS_CONFIG_FILE = 'keys.yml'
     SCORE_INDENT = 10
     PET_OFFSET = 15
+
+    FALLEN_DURATION = 500 # ms
+
+    module AnimationFrame
+      WIN = 12
+      LOSE = 13
+      FALL = 14
+    end
+
+    module Dance
+      module Multiplier
+        INITIAL = 1
+        MAX = 20
+
+        SLOW = 1
+        NORMAL = 2..9
+        FAST = 10..19
+        ULTRA = 20
+      end
+
+      module Set
+        SLOW = 0
+        NORMAL = 1
+        FAST = 2
+        ULTRA = 2 # TODO: Make a full speed dance.
+      end
+    end
 
     class << self
       def keys_config
@@ -16,6 +44,7 @@ module Hoops
 
     attr_reader :number, :difficulty_settings, :score
     def disable_hoops; @incoming.disable end
+    def fallen?; @fallen end
 
     def initialize(number, song_file, difficulty_settings, options = {})
       options = {
@@ -30,13 +59,14 @@ module Hoops
 
       @animations = Animation.new(file: "player#{@number + 1}_16x16.png", delay: 250)
       @animation_sets = [@animations[0..3], @animations[4..7], @animations[8..11]]
-      @current_animation = @animation_sets[0]
-      self.image = @animations[0]
 
       @incoming = IncomingList.create(self, song_file, difficulty_settings)
 
       @score = 0
-      @multiplier = 1
+      @multiplier = Dance::Multiplier::INITIAL
+      update_dance_set
+      self.image = @animations[0]
+
       @score_font = Font["pixelated.ttf", 40]
       @multiplier_font = Font["pixelated.ttf", 80]
 
@@ -48,15 +78,18 @@ module Hoops
 
       @score_x = (@number == 1) ? $window.width - SCORE_INDENT : SCORE_INDENT
       @score_align = (@number == 1) ? 1 : 0
+
+      @fallen = false
     end
 
     def update
       super
-      self.image = @current_animation.next
+
+      self.image = @current_animation.next unless fallen?
     end
 
     def win
-      self.image = @animations[12]
+      self.image = @animations[AnimationFrame::WIN]
     end
 
     def lose
@@ -66,7 +99,7 @@ module Hoops
         @x += 6
       end
 
-      self.image = @animations[13]
+      self.image = @animations[AnimationFrame::LOSE]
     end
 
     def reset_multiplier
@@ -75,22 +108,47 @@ module Hoops
         @pet = nil
       end
 
-      if @multiplier > 1
-        @current_animation = @animation_sets[0]
-      end
-
       @multiplier = 1
+
+      update_dance_set
+
+      fall_over
+    end
+
+    def fall_over
+      self.image = @animations[AnimationFrame::FALL]
+      @fallen = true
+      after(FALLEN_DURATION, name: :get_up) { get_up }
+    end
+
+    def get_up
+      stop_timer :get_up
+      @fallen = false
     end
 
     def increment_multiplier
-      case @multiplier
-        when 1
-          @current_animation = @animation_sets[1]
-        when 19
-          @current_animation = @animation_sets[2]
-      end
+      get_up if fallen?
 
-      @multiplier += 1 unless @multiplier == MAX_MULTIPLIER
+      @multiplier += 1 unless @multiplier == Dance::Multiplier::MAX
+
+      update_dance_set
+    end
+
+    def update_dance_set
+      new_set = case @multiplier
+                  when Dance::Multiplier::SLOW
+                    Dance::Set::SLOW
+                  when Dance::Multiplier::NORMAL
+                    Dance::Set::NORMAL
+                  when Dance::Multiplier::FAST
+                    Dance::Set::FAST
+                  when Dance::Multiplier::ULTRA
+                    Dance::Set::ULTRA
+                  else
+                    raise "Bad dance multiplier"
+                end
+
+      @current_animation = @animation_sets[new_set]
     end
 
     def add_score(score)
