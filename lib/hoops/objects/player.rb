@@ -12,12 +12,13 @@ module Hoops
     FALLEN_DURATION = 500 # ms
 
     module AnimationFrame
-      WIN = 12
-      LOSE = 13
-      FALL = 14
+      WIN = 16
+      LOSE = 17
+      FALL = 18
     end
 
     module Dance
+      # Multiplier to generate each dance set.
       module Multiplier
         INITIAL = 1
         MAX = 20
@@ -28,11 +29,12 @@ module Hoops
         ULTRA = 20
       end
 
+      # The row in the animation image for the animation.
       module Set
         SLOW = 0
         NORMAL = 1
         FAST = 2
-        ULTRA = 2 # TODO: Make a full speed dance.
+        ULTRA = 3
       end
     end
 
@@ -58,7 +60,7 @@ module Hoops
       log.debug { "Playing with difficulty: #{@difficulty_settings}" }
 
       @animations = Animation.new(file: "player#{@number + 1}_16x16.png", delay: 250)
-      @animation_sets = [@animations[0..3], @animations[4..7], @animations[8..11]]
+      @animation_sets = [@animations[0..3], @animations[4..7], @animations[8..11], @animations[12..15]]
 
       @incoming = IncomingList.create(self, song_file, difficulty_settings)
 
