@@ -21,7 +21,7 @@ module Hoops
         right: Color.rgb(255, 0, 255), # Magenta
     }
 
-    PERSISTENT_FRAMES = 25
+    PERSISTENT_FRAMES = 20
 
     class << self
       def animation

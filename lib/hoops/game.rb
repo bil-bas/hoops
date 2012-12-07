@@ -95,6 +95,8 @@ class Game < Window
 
     @pixel = TexPlay.create_image($window, 1, 1, color: Color.rgb(255, 255, 255))
 
+    update_caption
+
     push_game_state Menu
   end
 
@@ -109,12 +111,14 @@ class Game < Window
     @used_time += milliseconds - draw_started
   end
 
+  def update_caption
+    self.caption = "#{TITLE} [FPS: #{fps} (#{@potential_fps})]"
+  end
+
   def update
     update_started = milliseconds
 
     super
-
-    self.caption = "#{TITLE} [FPS: #{fps} (#{@potential_fps})]"
 
     @used_time += milliseconds - update_started
 
@@ -126,6 +130,8 @@ class Game < Window
       @potential_fps = (fps / [(@used_time.to_f / (milliseconds - @last_time)), 0.0001].max).floor
       @used_time = 0
       @last_time = milliseconds
+
+      update_caption
     end
   end
 
