@@ -14,6 +14,8 @@ module Hoops
     PLAYER_Y = 24
     LAST_HOOP_TIME = 3500 # Stop spitting out hoops at the end of the song.
 
+    FADE_OUT_SPEED = 0.98 # Speed, per frame, to reduce volume by at the end of the game.
+
     def initialize(settings1, settings2, track, max_length)
       super()
 
@@ -96,8 +98,14 @@ module Hoops
       if @song.playing? and remaining_time > 0
         @game_duration = [@game_duration + frame_time, @track_duration_ms].min
         if remaining_time < LAST_HOOP_TIME
+          # Stop spitting out any new hoops.
           @player1.disable_hoops if @player1
           @player2.disable_hoops if @player2
+
+          # Fade out.
+          @volume_full *= FADE_OUT_SPEED
+          @volume_muted *= FADE_OUT_SPEED
+          @song.volume *= FADE_OUT_SPEED
         end
         super
       else
