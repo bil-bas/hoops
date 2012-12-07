@@ -38,6 +38,10 @@ module Hoops
           @difficulty_controls.each_pair do |player, control|
             control.each {|c| c.enabled = players_playing[player] }
           end
+
+          2.times do |i|
+            @player_image_frames[i].image = @player_images[[i, (players_playing[i] ? :enabled : :disabled)]]
+          end
         end
       end
 
@@ -69,8 +73,20 @@ module Hoops
     end
 
     def player_image(number)
-      image = Image.load_tiles($window, File.join(Image.autoload_dirs[0], "player#{number + 1}_16x16.png"), 16, 16, true)[0]
-      image_frame image, factor: 12, padding_top: 20, tip: PLAYER_NAMES[number]
+      # Create two images, one normal and the other greyed out.
+      @player_images ||= {}
+      enabled_image = Image.load_tiles($window, File.join(Image.autoload_dirs[0], "player#{number + 1}_16x16.png"), 16, 16, true)[0]
+      enabled_image.refresh_cache
+      disabled_image = enabled_image.dup
+      disabled_image.clear color: [0.25, 0.25, 0.25], dest_ignore: :transparent
+      disabled_image.refresh_cache
+
+      @player_images[[number, :enabled]] = enabled_image
+      @player_images[[number, :disabled]] = disabled_image
+
+      # Put the normal image into the frame, which can be replaced later.
+      @player_image_frames ||= []
+      @player_image_frames[number] = image_frame enabled_image, factor: 12, padding_top: 20, tip: PLAYER_NAMES[number]
     end
 
     def track_selector
